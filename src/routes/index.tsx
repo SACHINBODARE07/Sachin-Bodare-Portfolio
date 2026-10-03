@@ -38,7 +38,7 @@ import {
   GitFork,
   Activity,
 } from "lucide-react";
-import portraitAsset from "@/assets/portrait.jpg";
+import portraitAsset from "@/assets/Sachin-Profile Photo.jpg";
 import { ThemeProvider, useTheme } from "@/lib/theme";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { CursorGlow } from "@/components/CursorGlow";
