@@ -1,0 +1,3 @@
+- [ ] Show every public GitHub project, with recent updates first and honest repository details.
+- [ ] Make white the default, preserve dark palettes, and refine background, motion, cursor, and mobile layouts.
+- [ ] Verify light/dark and desktop/mobile behavior.

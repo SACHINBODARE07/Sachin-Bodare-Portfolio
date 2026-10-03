@@ -1,0 +1,378 @@
+[
+  {
+    "name": "EdgeToursTravels_NextJs",
+    "description": "EdgeToursTravels_NextJs",
+    "language": "TypeScript",
+    "pushedAt": "2026-05-17T23:06:13Z",
+    "fork": true,
+    "size": 43219
+  },
+  {
+    "name": "studisky",
+    "description": null,
+    "language": "TypeScript",
+    "pushedAt": "2026-05-15T20:36:26Z",
+    "fork": false,
+    "size": 1041
+  },
+  {
+    "name": "NGO",
+    "description": null,
+    "language": "TypeScript",
+    "pushedAt": "2026-05-07T13:26:04Z",
+    "fork": false,
+    "size": 3946
+  },
+  {
+    "name": "AkashTech-Frontend",
+    "description": null,
+    "language": "TypeScript",
+    "pushedAt": "2026-03-18T19:20:00Z",
+    "fork": false,
+    "size": 398
+  },
+  {
+    "name": "AkashTech-backend",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2026-03-18T17:51:10Z",
+    "fork": false,
+    "size": 1157
+  },
+  {
+    "name": "Taskapp-Backend",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-12-23T11:44:39Z",
+    "fork": false,
+    "size": 12220
+  },
+  {
+    "name": "IFAS-Test",
+    "description": null,
+    "language": "TypeScript",
+    "pushedAt": "2025-12-12T06:34:45Z",
+    "fork": false,
+    "size": 52805
+  },
+  {
+    "name": "Subscription-SaaS-Invoice-Billing-System",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-12-05T19:17:56Z",
+    "fork": false,
+    "size": 1772
+  },
+  {
+    "name": "Restaurant-Management-System",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-12-05T18:51:05Z",
+    "fork": false,
+    "size": 1534
+  },
+  {
+    "name": "Real-Estate-Booking-Website",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-12-05T18:43:00Z",
+    "fork": false,
+    "size": 48402
+  },
+  {
+    "name": "Multi-Vendor-E-Commerce-Platform",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-12-05T18:31:58Z",
+    "fork": false,
+    "size": 381
+  },
+  {
+    "name": "Social-Media-Clone",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-12-05T18:21:01Z",
+    "fork": false,
+    "size": 421
+  },
+  {
+    "name": "Learning-Management-System",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-12-05T18:08:14Z",
+    "fork": false,
+    "size": 2737
+  },
+  {
+    "name": "Human-Resource-Management-System",
+    "description": null,
+    "language": "TypeScript",
+    "pushedAt": "2025-12-05T18:01:45Z",
+    "fork": false,
+    "size": 503
+  },
+  {
+    "name": "Clinic-Management-System",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-12-05T17:48:26Z",
+    "fork": false,
+    "size": 39304
+  },
+  {
+    "name": "Employee-Management-System",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-12-05T17:38:23Z",
+    "fork": false,
+    "size": 699
+  },
+  {
+    "name": "CRM-System",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-12-05T17:14:28Z",
+    "fork": false,
+    "size": 3972
+  },
+  {
+    "name": "School-Management-System",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-12-05T16:44:54Z",
+    "fork": false,
+    "size": 243
+  },
+  {
+    "name": "skylarktest",
+    "description": null,
+    "language": "TypeScript",
+    "pushedAt": "2025-07-21T10:54:25Z",
+    "fork": false,
+    "size": 84
+  },
+  {
+    "name": "KeyIdeasAssignment",
+    "description": null,
+    "language": null,
+    "pushedAt": "2025-06-12T18:29:13Z",
+    "fork": false,
+    "size": 5575
+  },
+  {
+    "name": "Bharatbhent",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-04-03T20:18:57Z",
+    "fork": false,
+    "size": 27
+  },
+  {
+    "name": "IInspark",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-03-29T12:04:16Z",
+    "fork": false,
+    "size": 398
+  },
+  {
+    "name": "Drone-Management-System",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-03-29T09:00:18Z",
+    "fork": false,
+    "size": 216
+  },
+  {
+    "name": "Id-Card-Management",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2025-03-08T09:04:07Z",
+    "fork": false,
+    "size": 18452
+  },
+  {
+    "name": "Advanced-Currency-Calculator",
+    "description": null,
+    "language": "TypeScript",
+    "pushedAt": "2025-01-14T16:35:44Z",
+    "fork": false,
+    "size": 97
+  },
+  {
+    "name": "BackendPractice",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2024-12-02T20:04:52Z",
+    "fork": false,
+    "size": 36
+  },
+  {
+    "name": "mern-challenge",
+    "description": "MERN Coding Challenge: A full-stack application using MongoDB, Express, React, and Node.js to manage transactions, display statistics, and visualize data with charts.",
+    "language": "JavaScript",
+    "pushedAt": "2024-10-17T08:42:31Z",
+    "fork": false,
+    "size": 6735
+  },
+  {
+    "name": "LearningApplication",
+    "description": null,
+    "language": "JavaScript",
+    "pushedAt": "2024-09-28T15:56:06Z",
+    "fork": false,
+    "size": 6038
+  },
+  {
+    "name": "PayingGuest-Website",
+    "description": null,
+    "language": null,
+    "pushedAt": "2024-08-12T11:13:14Z",
+    "fork": false,
+    "size": 0
+  },
+  {
+    "name": "ChatApp",
+    "description": "ChatApplication using MERN Stack and Socket.io",
+    "language": null,
+    "pushedAt": "2024-08-08T19:28:23Z",
+    "fork": false,
+    "size": 9485
+  },
+  {
+    "name": "Form_Assignment",
+    "description": "Form is created using MongoDB,Express Js,React js,Node js",
+    "language": null,
+    "pushedAt": "2024-03-29T11:01:52Z",
+    "fork": false,
+    "size": 23216
+  },
+  {
+    "name": "Forms",
+    "description": "Created Form using MongoDB,Express Js,Reacts Js,Node Js",
+    "language": null,
+    "pushedAt": "2024-03-29T01:23:45Z",
+    "fork": false,
+    "size": 6419
+  },
+  {
+    "name": "StudentPortal",
+    "description": "Created an ASP.NET MVC CRUD app using Entity Framework Core and SQL Server.I use .NET 8 MVC template in Visual Studio 2022 to create this CRUD app.",
+    "language": null,
+    "pushedAt": "2024-03-03T21:15:16Z",
+    "fork": false,
+    "size": 1807
+  },
+  {
+    "name": "CODEBIN",
+    "description": "This is a Codebin project developed using Angular 17, aimed at providing a platform for developers to share and collaborate on code snippets. It offers a user-friendly interface for creating, editing, and sharing code snippets securely.",
+    "language": "TypeScript",
+    "pushedAt": "2024-03-03T21:08:18Z",
+    "fork": false,
+    "size": 232
+  },
+  {
+    "name": "Bulb",
+    "description": "This project is developed using JavaScript with DOM Manipulation.",
+    "language": null,
+    "pushedAt": "2024-02-29T19:35:37Z",
+    "fork": false,
+    "size": 576
+  },
+  {
+    "name": "Add-Course",
+    "description": "This project is developed using HTml,Css,Javascript and Bootstrap using CRUD operations.",
+    "language": "HTML",
+    "pushedAt": "2024-02-29T19:27:28Z",
+    "fork": false,
+    "size": 3
+  },
+  {
+    "name": "Automated-Tour-Planner",
+    "description": "This Project developed using Html,CSS,JavaScript and Java.It is a Smart trip planner platform.",
+    "language": null,
+    "pushedAt": "2024-02-29T19:22:45Z",
+    "fork": false,
+    "size": 271
+  },
+  {
+    "name": "User-Management-System",
+    "description": "User Registration,Login and Logout System.",
+    "language": "HTML",
+    "pushedAt": "2024-02-29T19:17:25Z",
+    "fork": false,
+    "size": 41
+  },
+  {
+    "name": "Course-Learning-Page",
+    "description": null,
+    "language": "HTML",
+    "pushedAt": "2024-02-12T08:40:42Z",
+    "fork": false,
+    "size": 3
+  },
+  {
+    "name": "growagroneer.com",
+    "description": "Grow Agroneer Web based application developed using Html,CSS,Javascript.",
+    "language": "HTML",
+    "pushedAt": "2024-01-31T12:15:05Z",
+    "fork": false,
+    "size": 6162
+  },
+  {
+    "name": "Colmar_Academy",
+    "description": null,
+    "language": "HTML",
+    "pushedAt": "2024-01-31T11:58:54Z",
+    "fork": false,
+    "size": 25530
+  },
+  {
+    "name": "Web-dev-mini-projects",
+    "description": "The repository contains the list of awesome\u2728 & cool web development beginner-friendly\u270c\ufe0f projects!",
+    "language": null,
+    "pushedAt": "2024-01-30T05:54:33Z",
+    "fork": true,
+    "size": 233970
+  },
+  {
+    "name": "TimeConversion",
+    "description": null,
+    "language": "Java",
+    "pushedAt": "2024-01-11T10:29:50Z",
+    "fork": false,
+    "size": 1
+  },
+  {
+    "name": "excursion-",
+    "description": null,
+    "language": "HTML",
+    "pushedAt": "2023-12-06T18:38:24Z",
+    "fork": false,
+    "size": 14049
+  },
+  {
+    "name": "NewGit",
+    "description": null,
+    "language": "HTML",
+    "pushedAt": "2023-10-14T18:22:52Z",
+    "fork": false,
+    "size": 2
+  },
+  {
+    "name": "smart_trip_planner_ui",
+    "description": null,
+    "language": null,
+    "pushedAt": "2023-07-02T16:53:15Z",
+    "fork": true,
+    "size": 46
+  },
+  {
+    "name": "ReactJS",
+    "description": null,
+    "language": null,
+    "pushedAt": "2021-12-17T16:22:56Z",
+    "fork": true,
+    "size": 479
+  }
+]
