@@ -38,7 +38,7 @@ import {
   GitFork,
   Activity,
 } from "lucide-react";
-import portraitAsset from "@/assets/Sachin-Profile Photo.jpg";
+import portraitAsset from "@/assets/Sachin-Profile.jpg";
 import { ThemeProvider, useTheme } from "@/lib/theme";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { CursorGlow } from "@/components/CursorGlow";
@@ -271,7 +271,7 @@ function Hero() {
             <div className="absolute -inset-6 rounded-3xl bg-gradient-to-br from-ember/20 via-pink/10 to-violet/20 blur-2xl float-slow" />
             <div className="relative rounded-3xl border border-border/80 bg-surface overflow-hidden w-56 h-56 sm:w-80 sm:h-80 group">
               <img
-                src={portraitAsset.url}
+                src={portraitAsset}
                 alt="Sachin Bodare portrait"
                 width={512}
                 height={512}
@@ -279,7 +279,7 @@ function Hero() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
               <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-mono text-[10px] text-muted-foreground">
-                <span className="rounded-full bg-background/70 backdrop-blur px-2 py-1 border border-border/60">v1.0 — replace me</span>
+                <span className="rounded-full bg-background/70 backdrop-blur px-2 py-1 border border-border/60">—  me</span>
                 <span className="rounded-full bg-background/70 backdrop-blur px-2 py-1 border border-border/60 text-lime">● LIVE</span>
               </div>
             </div>
