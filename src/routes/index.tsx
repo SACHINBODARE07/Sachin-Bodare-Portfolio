@@ -36,12 +36,15 @@ import {
   Star,
   GitFork,
   Activity,
-  ArrowUpRight,
+  Play,
+  Info,
+  ChevronLeft,
+  ChevronRight,
   ChevronDown,
-  Briefcase,
-  Sprout,
-  Compass,
   ExternalLink,
+  Sun,
+  Moon,
+  Coffee,
 } from "lucide-react";
 import portraitAsset from "@/assets/Sachin-Profile.jpg";
 import { projects } from "@/lib/projects";
@@ -50,20 +53,18 @@ export const Route = createFileRoute("/")({
   component: Portfolio,
   head: () => ({
     meta: [
-      { title: "Sachin Bodare — Coder, Traveller & Farmer" },
-      { name: "description", content: "Portfolio of Sachin Bodare — full-stack developer who also travels and farms. Live sites, every GitHub repo and case studies." },
-      { property: "og:title", content: "Sachin Bodare — Coder, Traveller & Farmer" },
-      { property: "og:description", content: "React · Next.js · Node · MongoDB. Three worlds, one developer." },
+      { title: "Sachin Bodare — Full Stack Developer Portfolio" },
+      { name: "description", content: "Portfolio of Sachin Bodare — full-stack developer shipping production web apps with React, Next.js, Node.js and MongoDB. Live sites, every GitHub repo and case studies." },
+      { name: "color-scheme", content: "dark light" },
+      { property: "og:title", content: "Sachin Bodare — Full Stack Developer" },
+      { property: "og:description", content: "React · Next.js · Node · MongoDB. 13 live sites and every GitHub repo." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;700;800&family=Nunito:wght@400;600;700;800&family=Young+Serif&display=swap",
-      },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Figtree:wght@400;500;600;700;800&display=swap" },
     ],
   }),
 });
@@ -78,81 +79,10 @@ const GITHUB_USER = "SACHINBODARE07";
 const LINKEDIN = "https://www.linkedin.com/in/sachin-bodare";
 const INSTAGRAM = "https://instagram.com/sachinbodare21";
 const YOUTUBE = "https://youtube.com/@thingsofthings8844";
-const OLD_PORTFOLIO = "https://drive.google.com/file/d/1gS6IlQE0wqa6fp79rAMMt89FQx486O9r/view?usp=sharing";
+const OLD_PORTFOLIO = "https://drive.google.com/file/d/1P8bZnGe3RIjOhIY9Auk6nA_8RO3f44Fe/view?usp=sharing";
 
-const WRAP = "mx-auto w-full max-w-[1200px] px-4 sm:px-8";
-
-type PKey = "coder" | "traveller" | "farmer";
-
-const PERSONAS: Record<
-  PKey,
-  {
-    label: string;
-    icon: ComponentType<{ className?: string }>;
-    kicker: string;
-    blurb: string;
-    live: string;
-    exp: string;
-    expSub: string;
-    stack: string;
-    stackSub: string;
-    repos: string;
-    gallery: string;
-    gallerySub: string;
-    cta: string;
-    gh: { title: string; text: string; sub: string; bg: string; trophy: string };
-  }
-> = {
-  coder: {
-    label: "Coder",
-    icon: Terminal,
-    kicker: "~/sachin $ whoami",
-    blurb: "Full-stack developer. I turn requirements into production systems: Next.js front ends, Node APIs, MongoDB and PostgreSQL underneath.",
-    live: "Deployed.",
-    exp: "git log --career",
-    expSub: "Newest commit first.",
-    stack: "package.json",
-    stackSub: "Everything I npm install without thinking.",
-    repos: "git remote -v",
-    gallery: "Screenshots from life",
-    gallerySub: "Late nights, long roads and green fields. Swap in your own photos any time.",
-    cta: "Open the terminal",
-    gh: { title: "39ff88", text: "e6edf3", sub: "8b98a9", bg: "0f1722", trophy: "onedark" },
-  },
-  traveller: {
-    label: "Traveller",
-    icon: Compass,
-    kicker: "Pune → anywhere",
-    blurb: "I treat every project like a trip: pick a destination, pack light, ship before sunset, and always look for a better route.",
-    live: "Postcards from production.",
-    exp: "The route so far.",
-    expSub: "Every stop, newest first.",
-    stack: "What's in the bag.",
-    stackSub: "Packed light, used daily.",
-    repos: "The travel log.",
-    gallery: "Along the way.",
-    gallerySub: "Roads, hills and chai stops. Swap in your own photos any time.",
-    cta: "Plan a trip together",
-    gh: { title: "d9480f", text: "0f3b4a", sub: "5d7a85", bg: "fff3e3", trophy: "flat" },
-  },
-  farmer: {
-    label: "Farmer",
-    icon: Sprout,
-    kicker: "Soil · Seasons · Software",
-    blurb: "I grow crops and codebases the same way: good soil, patience, and fixing what's broken before the season turns.",
-    live: "Fresh from the harvest.",
-    exp: "Growing seasons.",
-    expSub: "Each season, newest first.",
-    stack: "The toolshed.",
-    stackSub: "Well-worn tools that earn their place.",
-    repos: "Every seed I've planted.",
-    gallery: "From the field.",
-    gallerySub: "Fields, fresh chai and weekend cricket. Swap in your own photos any time.",
-    cta: "Grow something together",
-    gh: { title: "3d6d14", text: "2b3a1f", sub: "6b7a58", bg: "f3eedd", trophy: "flat" },
-  },
-};
-const P_KEYS: PKey[] = ["coder", "traveller", "farmer"];
+const WRAP = "mx-auto w-full max-w-[1500px]";
+const PAD = "px-4 sm:px-8 lg:px-12";
 
 const ROLES = ["Software Developer", "Farmer", "Frontend Developer", "Backend Developer", "Traveller"];
 
@@ -170,7 +100,7 @@ const PHOTOS: { title: string; caption: string; art: ArtKind; src?: string; span
   { title: "Weekend cricket", caption: "Off-screen hours.", art: "cricket" },
 ];
 
-type Site = { name: string; url: string; cat: string; blurb: string; stack?: string[]; feat?: boolean };
+type Site = { name: string; url: string; cat: string; blurb: string; stack?: string[] };
 const liveSites: Site[] = [
   {
     name: "MediBazzar",
@@ -178,7 +108,6 @@ const liveSites: Site[] = [
     cat: "E-commerce",
     blurb: "Online marketplace for surgical, dental and healthcare supplies: brand catalogue, category browsing, seller onboarding and order tracking.",
     stack: ["Next.js"],
-    feat: true,
   },
   { name: "PigoPi Technologies", url: "https://pigo-pi.com/", cat: "Company", blurb: "Company website for PigoPi Technologies, the team where I ship production apps." },
   { name: "PiTask", url: "https://pitask.pigo-pi.com/", cat: "SaaS", blurb: "PiTask task manager: plan, assign and track work across a team." },
@@ -235,6 +164,7 @@ const LANG_COLORS: Record<string, string> = {
   Shell: "#89e051",
 };
 
+/** `dk: true` = brand colour is too dark for dark mode, so the icon is drawn white there. */
 type TechDef = { slug?: string; color: string; dk?: boolean; lucide?: boolean };
 const TECH: Record<string, TechDef> = {
   React: { slug: "react", color: "61DAFB" },
@@ -268,7 +198,7 @@ const TECH: Record<string, TechDef> = {
   Postman: { slug: "postman", color: "FF6C37" },
   JIRA: { slug: "jira", color: "0052CC" },
 };
-const tickerTech = ["React", "Next.js", "TypeScript", "Node.js", "Express", "MongoDB", "PostgreSQL", "Redis", "Docker", "AWS", "Tailwind", "Angular", "GraphQL", "Prisma", "Git", "Figma"];
+const topTech = ["React", "Next.js", "TypeScript", "Node.js", "MongoDB", "PostgreSQL", "AWS", "Tailwind", "Docker", "Redis"];
 
 const experience = [
   {
@@ -276,6 +206,8 @@ const experience = [
     company: "PigoPi Technologies",
     period: "Oct 2024 — Present",
     mode: "Remote",
+    progress: 72,
+    current: true,
     bullets: [
       "Shipped production apps: travel platform, HRMS, e-commerce, and PiTask task manager.",
       "Built scalable UIs in Next.js, React & Angular with SSR for SEO + performance.",
@@ -288,6 +220,8 @@ const experience = [
     company: "Freyr Energy Services Pvt. Ltd.",
     period: "July 2023",
     mode: "Hybrid",
+    progress: 100,
+    current: false,
     bullets: [
       "Coordinated solar installation projects and maintained full documentation.",
       "Owned client communication, requirements gathering and issue resolution.",
@@ -298,6 +232,8 @@ const experience = [
     company: "Vinsys IT Services",
     period: "Oct 2023 — Apr 2024",
     mode: "Remote",
+    progress: 100,
+    current: false,
     bullets: [
       "Built MERN features with a focus on scalability and clean architecture.",
       "Optimized response time by ~25% through targeted refactors.",
@@ -316,164 +252,133 @@ const skillGroups = [
 ];
 
 const education = [
-  { icon: GraduationCap, title: "B.E. Computer Engineering", org: "Sinhgad Institute, Pune", period: "2020 — 2024", detail: "CGPA 7.69" },
+  { icon: GraduationCap, title: "B.E. Computer Engineering", org: "Sinhgad Institute Of Technology and Science,Narhe,Pune", period: "2023", detail: "CGPA 7.69" },
   { icon: Award, title: "MERN Stack Certification", org: "Vinsys IT Services", period: "2023 — 2024", detail: "Production-grade curriculum" },
   { icon: Terminal, title: "Full Stack Web Dev", org: "Codecademy", period: "Self-paced", detail: "Continuous learning" },
 ];
 
 /* ───────────────────────── Styles ───────────────────────── */
 
-const NOISE =
-  "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35 0 0 0 0 .28 0 0 0 0 .15 0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")";
-
 const css = `
-.wd{--bg:#0b0f14;--ink:#e6edf3;--mute:#8b98a9;--card:#111823;--line:#1f2a3a;--acc:#39ff88;--acct:#39ff88;--acc2:#58a6ff;--on-acc:#04140a;
-  --r:8px;--rb:14px;--shadow:0 20px 50px -26px rgba(0,0,0,.9);--glow:0 0 0 1px rgba(57,255,136,.35),0 0 30px -6px rgba(57,255,136,.35);
-  --fd:'JetBrains Mono',ui-monospace,monospace;--fb:'IBM Plex Sans',system-ui,sans-serif;--dw:800;--ls:-.03em;
-  background:var(--bg);color:var(--ink);font-family:var(--fb);-webkit-font-smoothing:antialiased;position:relative;overflow-x:hidden;
-  transition:background-color .7s ease,color .7s ease}
-.wd[data-p="traveller"]{--bg:#fff3e3;--ink:#0f3b4a;--mute:#56747f;--card:#ffffff;--line:#f0d9bd;--acc:#ff6b35;--acct:#d9480f;--acc2:#0aa5a0;--on-acc:#ffffff;
-  --r:14px;--rb:24px;--shadow:0 24px 46px -28px rgba(15,59,74,.4);--glow:0 18px 40px -16px rgba(255,107,53,.5);
-  --fd:'Fraunces',Georgia,serif;--fb:'DM Sans',system-ui,sans-serif;--dw:800;--ls:-.035em}
-.wd[data-p="farmer"]{--bg:#f3eedd;--ink:#2b3a1f;--mute:#667552;--card:#fbf8ee;--line:#d9ceae;--acc:#4f8a1f;--acct:#3d6d14;--acc2:#c8873a;--on-acc:#ffffff;
-  --r:18px;--rb:30px;--shadow:0 20px 40px -26px rgba(70,55,20,.5);--glow:0 16px 34px -14px rgba(79,138,31,.5);
-  --fd:'Young Serif',Georgia,serif;--fb:'Nunito',system-ui,sans-serif;--dw:400;--ls:-.015em}
-.wd *{box-sizing:border-box}
-.wd ::selection{background:var(--acc);color:var(--on-acc)}
-.wd a:focus-visible,.wd button:focus-visible,.wd input:focus-visible,.wd textarea:focus-visible,.wd select:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+.nx{--red:#E50914;--red-hover:#f6121d;--bg:#141414;--surface:#181818;--raised:#2f2f2f;--ink:#ffffff;--mute:#b3b3b3;--faint:#777;--line:rgba(255,255,255,.12);
+  --btn:#ffffff;--btn-ink:#000000;--sec:rgba(109,109,110,.7);--sec-hover:rgba(109,109,110,.45);--green:#46d369;--stroke:#595959;
+  --nav-grad:linear-gradient(to bottom,rgba(0,0,0,.85),rgba(0,0,0,.4) 60%,transparent);--shadow:0 20px 40px -22px rgba(0,0,0,.9);--art-op:1;
+  background:var(--bg);color:var(--ink);font-family:'Figtree',system-ui,-apple-system,Segoe UI,sans-serif;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;transition:background-color .5s ease,color .5s ease}
+.nx[data-theme="light"]{--bg:#f5f5f1;--surface:#ffffff;--raised:#e9e9e4;--ink:#141414;--mute:#5a5a5a;--faint:#8a8a8a;--line:rgba(0,0,0,.12);
+  --btn:#141414;--btn-ink:#ffffff;--sec:rgba(20,20,20,.1);--sec-hover:rgba(20,20,20,.18);--green:#1a8f3c;--stroke:#c5c5bf;
+  --nav-grad:linear-gradient(to bottom,rgba(255,255,255,.95),rgba(245,245,241,.6) 60%,transparent);--shadow:0 20px 40px -24px rgba(20,20,20,.35)}
+.nx *{box-sizing:border-box}
+.nx ::selection{background:var(--red);color:#fff}
+.nx a:focus-visible,.nx button:focus-visible,.nx input:focus-visible,.nx textarea:focus-visible,.nx select:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 
-/* Per-world backdrop */
-.wd-bg{position:fixed;inset:0;z-index:0;pointer-events:none;transition:opacity .7s}
-.wd-bg-coder{background:
-  radial-gradient(ellipse 60% 40% at 80% 0%,rgba(57,255,136,.10),transparent 70%),
-  radial-gradient(ellipse 50% 40% at 0% 100%,rgba(88,166,255,.10),transparent 70%),
-  linear-gradient(rgba(57,255,136,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(57,255,136,.045) 1px,transparent 1px);
-  background-size:auto,auto,44px 44px,44px 44px}
-.wd-bg-traveller{background:
-  radial-gradient(ellipse 70% 40% at 90% 0%,rgba(255,107,53,.22),transparent 70%),
-  radial-gradient(ellipse 60% 40% at 0% 100%,rgba(10,165,160,.16),transparent 70%),
-  repeating-linear-gradient(115deg,transparent 0 46px,rgba(240,217,189,.55) 46px 47px)}
-.wd-bg-farmer{background:
-  radial-gradient(ellipse 70% 40% at 15% 0%,rgba(200,135,58,.20),transparent 70%),
-  radial-gradient(ellipse 60% 40% at 100% 100%,rgba(79,138,31,.18),transparent 70%),${NOISE}}
-.wd[data-p="coder"] .wd-bg-traveller,.wd[data-p="coder"] .wd-bg-farmer,
-.wd[data-p="traveller"] .wd-bg-coder,.wd[data-p="traveller"] .wd-bg-farmer,
-.wd[data-p="farmer"] .wd-bg-coder,.wd[data-p="farmer"] .wd-bg-traveller{opacity:0}
-.wd-scan{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity .7s;
-  background:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 3px)}
-.wd[data-p="coder"] .wd-scan{opacity:1}
-.wd-content{position:relative;z-index:2}
+.nx-display{font-family:'Bebas Neue','Impact',sans-serif;letter-spacing:.02em;font-weight:400}
+.nx-mute{color:var(--mute)}
+.nx-faint{color:var(--faint)}
+.nx-red{color:var(--red)}
+.nx-card{background:var(--surface);box-shadow:inset 0 0 0 1px var(--line),var(--shadow);border-radius:6px;transition:box-shadow .25s,background-color .5s}
+.group:hover>.nx-card,.nx-card:hover{box-shadow:inset 0 0 0 2px var(--ink),var(--shadow)}
+.nx-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--btn);color:var(--btn-ink);border-radius:4px;font-weight:700;transition:opacity .2s,transform .2s}
+.nx-btn:hover{opacity:.8}
+.nx-sec{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--sec);color:var(--ink);border-radius:4px;font-weight:700;transition:background-color .2s}
+.nx-sec:hover{background:var(--sec-hover)}
+.nx-redbtn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--red);color:#fff;border-radius:4px;font-weight:700;transition:background-color .2s}
+.nx-redbtn:hover{background:var(--red-hover)}
+.nx-chip{border:1px solid var(--line);border-radius:999px;transition:border-color .2s,background-color .2s,color .2s}
+.nx-chip:hover{border-color:var(--ink)}
+.nx-chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.nx-tag{background:var(--raised);border-radius:3px}
+.nx-input{background:var(--raised);color:var(--ink);border-radius:4px;border:1px solid transparent;transition:border-color .2s,background-color .2s}
+.nx-input::placeholder{color:var(--faint)}
+.nx-input:focus{outline:none;border-color:var(--ink)}
+.nx-link{color:var(--mute);transition:color .2s}
+.nx-link:hover{color:var(--ink)}
+.nx-scroll{scrollbar-width:none}
+.nx-scroll::-webkit-scrollbar{display:none}
+.nx-arrow{background:color-mix(in srgb,var(--bg) 70%,transparent)}
+.nx-arrow:hover{background:color-mix(in srgb,var(--bg) 88%,transparent)}
 
-.wd-display{font-family:var(--fd);font-weight:var(--dw);letter-spacing:var(--ls)}
-.wd-mute{color:var(--mute)}
-.wd-acct{color:var(--acct)}
-.wd-card{background:var(--card);border:1px solid var(--line);border-radius:var(--rb);box-shadow:var(--shadow);transition:background-color .7s,border-color .7s,box-shadow .3s}
-.wd[data-p="coder"] .wd-card:hover{box-shadow:var(--glow)}
-.wd-chip{background:color-mix(in srgb,var(--ink) 7%,transparent);border-radius:999px}
-.wd[data-p="coder"] .wd-chip{border-radius:6px}
-.wd-btn{background:var(--acc);color:var(--on-acc);border-radius:var(--r);font-weight:700;transition:transform .25s,box-shadow .25s,filter .25s}
-.wd[data-p="traveller"] .wd-btn,.wd[data-p="farmer"] .wd-btn{border-radius:999px}
-.wd-btn:hover{transform:translateY(-2px);box-shadow:var(--glow);filter:brightness(1.05)}
-.wd-ghost{border:1.5px solid var(--line);border-radius:var(--r);font-weight:700;transition:border-color .25s,transform .25s}
-.wd[data-p="traveller"] .wd-ghost,.wd[data-p="farmer"] .wd-ghost{border-radius:999px}
-.wd-ghost:hover{border-color:var(--acc);transform:translateY(-2px)}
-.wd-input{background:color-mix(in srgb,var(--ink) 5%,transparent);border:1.5px solid var(--line);color:var(--ink);border-radius:var(--r);transition:border-color .2s}
-.wd-input::placeholder{color:var(--mute);opacity:.7}
-.wd-input:focus{border-color:var(--acc);outline:none}
-.wd-nav{background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:background-color .7s}
-.wd-navlink{color:var(--mute);transition:color .2s}
-.wd-navlink:hover{color:var(--ink)}
-.wd-seg{display:inline-flex;gap:2px;padding:3px;border:1.5px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--ink) 5%,transparent)}
-.wd-seg button{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:7px 12px;font-size:13px;font-weight:700;color:var(--mute);transition:background-color .25s,color .25s}
-.wd-seg button[aria-selected="true"]{background:var(--acc);color:var(--on-acc)}
-.wd[data-p="coder"] .wd-seg,.wd[data-p="coder"] .wd-seg button{border-radius:8px}
+/* 3D tilt */
+.nx-tilt{transform-style:preserve-3d;transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--s,1));
+  transition:transform .35s cubic-bezier(.2,.8,.2,1);will-change:transform}
+.nx-tilt[data-active="true"]{transition:transform .08s linear}
+.nx-glare{background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.22),transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none}
+.nx-tilt[data-active="true"] .nx-glare{opacity:1}
 
-.wd-kicker{display:inline-flex;gap:8px;align-items:center;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--acct)}
-.wd-kicker::before{content:"$";opacity:.9}
-.wd[data-p="traveller"] .wd-kicker::before{content:"→"}
-.wd[data-p="farmer"] .wd-kicker::before{content:"✿"}
-.wd[data-p="coder"] .wd-kicker{font-family:var(--fd);text-transform:none;letter-spacing:0}
-
-.wd-badge{display:inline-block;border:1.5px solid var(--acc);color:var(--acct);padding:3px 10px;font-size:12px;font-weight:800;border-radius:999px}
-.wd[data-p="coder"] .wd-badge{border-radius:4px;font-family:var(--fd);font-weight:700}
-.wd[data-p="coder"] .wd-badge::before{content:"[ "}
-.wd[data-p="coder"] .wd-badge::after{content:" ]"}
-.wd[data-p="traveller"] .wd-badge{border-style:dashed;border-width:2px;transform:rotate(-3deg);padding:4px 12px}
-.wd[data-p="farmer"] .wd-badge{background:color-mix(in srgb,var(--acc2) 22%,transparent);border-color:transparent;color:#7a4a12}
-.wd-dots{display:none;gap:6px}
-.wd[data-p="coder"] .wd-dots{display:flex}
-
-/* Portrait frames */
-.wd-frame{position:relative;overflow:hidden;background:var(--card);display:flex;flex-direction:column;transition:all .5s}
-.wd-frame img{display:block;flex:1 1 0;min-height:0;width:100%;object-fit:cover}
-.wd[data-p="coder"] .wd-frame{border:1.5px solid var(--acc);border-radius:10px;box-shadow:var(--glow)}
-.wd[data-p="traveller"] .wd-frame{padding:8px 8px 40px;border-radius:6px;transform:rotate(-4deg);box-shadow:var(--shadow)}
-.wd[data-p="farmer"] .wd-frame{border:5px solid var(--acc2);border-radius:999px 999px 22px 22px;box-shadow:var(--shadow)}
-.wd-frame-cap{display:none;position:absolute;left:0;right:0;bottom:0;text-align:center}
-.wd[data-p="traveller"] .wd-frame-cap{display:block;padding:10px;font-family:var(--fd);font-style:italic;font-size:14px;color:#0f3b4a}
-.wd-frame-bar{display:none;align-items:center;gap:6px;padding:7px 10px;border-bottom:1px solid var(--line);font-family:var(--fd);font-size:11px;color:var(--mute)}
-.wd[data-p="coder"] .wd-frame-bar{display:flex}
-.wd-tape{display:none;position:absolute;top:-10px;left:50%;width:84px;height:24px;margin-left:-42px;background:rgba(255,196,120,.75);transform:rotate(3deg)}
-.wd[data-p="traveller"] .wd-tape{display:block}
+/* Top-10 outlined numerals */
+.nx-num{font-family:'Bebas Neue',Impact,sans-serif;line-height:.8;color:var(--bg);-webkit-text-stroke:3px var(--stroke);paint-order:stroke fill;transition:color .5s}
 
 /* Motion */
-.wd-fade{animation:wd-fade .7s cubic-bezier(.2,.8,.2,1) both}
-@keyframes wd-fade{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:none}}
-.wd-rise{animation:wd-rise .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0ms)}
-@keyframes wd-rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
-.wd-reveal{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.8,.2,1) var(--d,0ms),transform .8s cubic-bezier(.2,.8,.2,1) var(--d,0ms)}
-.wd-reveal[data-in="true"]{opacity:1;transform:none}
-.wd-caret{display:inline-block;width:.075em;height:.85em;margin-left:.07em;border-radius:2px;background:var(--acc);vertical-align:-.05em;animation:wd-blink 1s steps(1) infinite}
-@keyframes wd-blink{50%{opacity:0}}
-.wd-tilt{transform-style:preserve-3d;transform:perspective(1100px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--s,1));
-  transition:transform .4s cubic-bezier(.2,.8,.2,1);will-change:transform}
-.wd-tilt[data-active="true"]{transition:transform .08s linear}
-.wd-shine{background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.35),transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none;mix-blend-mode:soft-light}
-.wd-tilt[data-active="true"] .wd-shine{opacity:1}
-.wd-shot{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
-.group:hover .wd-shot{transform:scale(1.05) translateY(-2%)}
-@keyframes wd-live{0%{box-shadow:0 0 0 0 rgba(61,220,151,.6)}100%{box-shadow:0 0 0 8px rgba(61,220,151,0)}}
-.wd-live{animation:wd-live 2s ease-out infinite}
-.wd-marq{display:flex;gap:2.75rem;width:max-content;animation:wd-marq 42s linear infinite}
-.wd-marq-wrap:hover .wd-marq{animation-play-state:paused}
-@keyframes wd-marq{to{transform:translateX(-50%)}}
-.wd-drift{animation:wd-drift 26s linear infinite}
-@keyframes wd-drift{from{transform:translateX(-40px)}to{transform:translateX(60px)}}
-.wd-bobsvg{animation:wd-bobsvg 6s ease-in-out infinite}
-@keyframes wd-bobsvg{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.wd-spin{transform-box:fill-box;transform-origin:center;animation:wd-spin 9s linear infinite}
-@keyframes wd-spin{to{transform:rotate(360deg)}}
-.wd-plane{animation:wd-plane 16s linear infinite}
-@keyframes wd-plane{from{transform:translate(-80px,20px)}to{transform:translate(640px,-30px)}}
-.wd-steam{animation:wd-steam 3s ease-in-out infinite}
-@keyframes wd-steam{0%{opacity:0;transform:translateY(8px)}50%{opacity:.8}100%{opacity:0;transform:translateY(-14px)}}
+.nx-rise{animation:nx-rise .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0ms)}
+@keyframes nx-rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.nx-reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.8,.2,1) var(--d,0ms),transform .7s cubic-bezier(.2,.8,.2,1) var(--d,0ms)}
+.nx-reveal[data-in="true"]{opacity:1;transform:none}
+.nx-caret{display:inline-block;width:.09em;height:.82em;margin-left:.07em;background:var(--red);vertical-align:-.04em;animation:nx-blink 1s steps(1) infinite}
+@keyframes nx-blink{50%{opacity:0}}
+.nx-float{animation:nx-float 4s ease-in-out infinite}
+@keyframes nx-float{0%,100%{transform:translateZ(60px) translateY(0)}50%{transform:translateZ(60px) translateY(-6px)}}
+.nx-shot{transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.group:hover .nx-shot{transform:scale(1.06)}
+@keyframes nx-live{0%{box-shadow:0 0 0 0 rgba(70,211,105,.6)}100%{box-shadow:0 0 0 7px rgba(70,211,105,0)}}
+.nx-live{animation:nx-live 2s ease-out infinite}
+.nx-steam{animation:nx-steam 3s ease-in-out infinite}
+@keyframes nx-steam{0%{opacity:0;transform:translateY(8px)}50%{opacity:.8}100%{opacity:0;transform:translateY(-14px)}}
+
+/* Intro splash */
+.nx-intro{position:fixed;inset:0;z-index:100;background:#000;display:grid;place-items:center;animation:nx-intro-out .5s ease 1.7s forwards}
+.nx-intro span{font-family:'Bebas Neue',Impact,sans-serif;font-size:min(46vw,300px);color:#E50914;line-height:1;text-shadow:0 0 60px rgba(229,9,20,.55);
+  animation:nx-intro-zoom 2s cubic-bezier(.6,0,.9,.4) forwards}
+@keyframes nx-intro-zoom{0%{transform:scale(.7);opacity:0}20%{opacity:1;transform:scale(1)}75%{opacity:1}100%{transform:scale(9);opacity:0}}
+@keyframes nx-intro-out{to{opacity:0;visibility:hidden}}
 
 /* Quick-contact buttons */
-.wd-fab{position:fixed;right:clamp(14px,3vw,28px);bottom:clamp(14px,3vw,28px);z-index:60;display:flex;flex-direction:column;gap:12px;
+.nx-fab{position:fixed;right:clamp(14px,3vw,28px);bottom:clamp(14px,3vw,28px);z-index:60;display:flex;flex-direction:column;gap:12px;
   opacity:0;transform:translateY(18px) scale(.92);pointer-events:none;transition:opacity .45s,transform .45s cubic-bezier(.2,.8,.2,1)}
-.wd-fab[data-in="true"]{opacity:1;transform:none;pointer-events:auto}
-.wd-fab-btn{position:relative;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;color:#fff;box-shadow:0 18px 34px -14px rgba(0,0,0,.6);transition:transform .25s}
-.wd-fab-btn:hover{transform:translateY(-4px) scale(1.06)}
-.wd-fab-wa{background:linear-gradient(135deg,#25D366,#128C7E)}
-.wd-fab-gm{background:linear-gradient(135deg,#EA4335,#FBBC05)}
-.wd-fab-btn::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;animation:wd-fabping 3s cubic-bezier(.2,.6,.3,1) infinite}
-.wd-fab-gm::before{animation-delay:1.5s}
-@keyframes wd-fabping{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.75);opacity:0}}
-.wd-fab-label{position:absolute;right:calc(100% + 12px);white-space:nowrap;border-radius:999px;background:var(--card);color:var(--ink);border:1px solid var(--line);
+.nx-fab[data-in="true"]{opacity:1;transform:none;pointer-events:auto}
+.nx-fab-btn{position:relative;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;color:#fff;box-shadow:0 18px 34px -14px rgba(0,0,0,.6);transition:transform .25s}
+.nx-fab-btn:hover{transform:translateY(-4px) scale(1.06)}
+.nx-fab-wa{background:linear-gradient(135deg,#25D366,#128C7E)}
+.nx-fab-gm{background:linear-gradient(135deg,#EA4335,#FBBC05)}
+.nx-fab-btn::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;animation:nx-fabping 3s cubic-bezier(.2,.6,.3,1) infinite}
+.nx-fab-gm::before{animation-delay:1.5s}
+@keyframes nx-fabping{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.75);opacity:0}}
+.nx-fab-label{position:absolute;right:calc(100% + 12px);white-space:nowrap;border-radius:4px;background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line);
   padding:8px 14px;font-size:13px;font-weight:700;opacity:0;transform:translateX(8px);pointer-events:none;transition:opacity .22s,transform .22s}
-.wd-fab-btn:hover .wd-fab-label,.wd-fab-btn:focus-visible .wd-fab-label{opacity:1;transform:none}
-@media (max-width:420px){.wd-fab-label{display:none}.wd-fab-btn{width:52px;height:52px}}
+.nx-fab-btn:hover .nx-fab-label,.nx-fab-btn:focus-visible .nx-fab-label{opacity:1;transform:none}
+@media (max-width:420px){.nx-fab-label{display:none}.nx-fab-btn{width:52px;height:52px}}
 
 @media (prefers-reduced-motion:reduce){
-  .wd-tilt{transform:none!important}
-  .wd-fade,.wd-rise,.wd-caret,.wd-live,.wd-marq,.wd-drift,.wd-bobsvg,.wd-spin,.wd-plane,.wd-steam,.wd-fab-btn::before{animation:none!important}
-  .wd-reveal{opacity:1;transform:none;transition:none}
-  .wd-shot{transition:none}
-  .wd *{scroll-behavior:auto!important}
+  .nx-tilt{transform:none!important}
+  .nx-rise,.nx-caret,.nx-float,.nx-live,.nx-steam,.nx-fab-btn::before{animation:none!important}
+  .nx-intro{display:none}
+  .nx-reveal{opacity:1;transform:none;transition:none}
+  .nx-shot{transition:none}
+  .nx *{scroll-behavior:auto!important}
 }
 `;
 
 /* ───────────────────────── Helpers ───────────────────────── */
+
+const artPalettes = [
+  ["#3a0a0e", "#E50914"],
+  ["#1c1c1c", "#B20710"],
+  ["#2b0d3a", "#E50914"],
+  ["#0d1f2d", "#E50914"],
+  ["#2a1a0a", "#ff5a36"],
+  ["#101010", "#831010"],
+];
+
+function hash(s: string) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+function artFor(name: string) {
+  const h = hash(name);
+  const [a, b] = artPalettes[h % artPalettes.length];
+  return `linear-gradient(${115 + (h % 5) * 18}deg, ${a} 0%, ${a} 38%, ${b} 150%)`;
+}
 
 function hostOf(url: string) {
   try {
@@ -528,19 +433,19 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
           io.disconnect();
         }
       },
-      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" },
+      { threshold: 0.06, rootMargin: "0px 0px -40px 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
   }, []);
   return (
-    <div ref={ref} data-in={shown} className={`wd-reveal ${className}`} style={{ "--d": `${delay}ms` } as CSSProperties}>
+    <div ref={ref} data-in={shown} className={`nx-reveal ${className}`} style={{ "--d": `${delay}ms` } as CSSProperties}>
       {children}
     </div>
   );
 }
 
-function Tilt({ children, className = "", max = 8, scale = 1.02 }: { children: ReactNode; className?: string; max?: number; scale?: number }) {
+function Tilt({ children, className = "", max = 7, scale = 1.03 }: { children: ReactNode; className?: string; max?: number; scale?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const onMove = (e: RPointerEvent<HTMLDivElement>) => {
     if (e.pointerType !== "mouse") return;
@@ -563,19 +468,37 @@ function Tilt({ children, className = "", max = 8, scale = 1.02 }: { children: R
     el.dataset.active = "false";
   };
   return (
-    <div ref={ref} onPointerMove={onMove} onPointerLeave={reset} onPointerCancel={reset} className={`wd-tilt group ${className}`}>
+    <div ref={ref} onPointerMove={onMove} onPointerLeave={reset} onPointerCancel={reset} className={`nx-tilt group ${className}`}>
       {children}
     </div>
   );
 }
 
-function Heading({ kicker, title, sub }: { kicker: string; title: ReactNode; sub?: ReactNode }) {
+/** A Netflix-style horizontal row with hover arrows. */
+function Row({ id, title, hint, children }: { id?: string; title: string; hint?: ReactNode; children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const scroll = (dir: number) => {
+    const el = ref.current;
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.85, behavior: "smooth" });
+  };
   return (
-    <Reveal className="mb-10 max-w-2xl">
-      <span className="wd-kicker">{kicker}</span>
-      <h2 className="wd-display mt-3 text-4xl leading-[1.05] sm:text-5xl md:text-6xl">{title}</h2>
-      {sub && <p className="wd-mute mt-4 text-base sm:text-lg">{sub}</p>}
-    </Reveal>
+    <section id={id} className="scroll-mt-20 pt-10 sm:pt-14">
+      <div className={`${WRAP} ${PAD} flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2`}>
+        <h2 className="text-xl font-extrabold sm:text-2xl">{title}</h2>
+        {hint}
+      </div>
+      <div className={`${WRAP} group/row relative`}>
+        <button onClick={() => scroll(-1)} aria-label="Scroll left" className="nx-arrow absolute inset-y-4 left-0 z-10 hidden w-12 place-items-center opacity-0 transition group-hover/row:opacity-100 md:grid">
+          <ChevronLeft className="h-8 w-8" />
+        </button>
+        <div ref={ref} className={`nx-scroll flex snap-x snap-mandatory gap-3 overflow-x-auto py-6 sm:gap-4 ${PAD}`}>
+          {children}
+        </div>
+        <button onClick={() => scroll(1)} aria-label="Scroll right" className="nx-arrow absolute inset-y-4 right-0 z-10 hidden w-12 place-items-center opacity-0 transition group-hover/row:opacity-100 md:grid">
+          <ChevronRight className="h-8 w-8" />
+        </button>
+      </div>
+    </section>
   );
 }
 
@@ -611,7 +534,7 @@ function useTypewriter(words: string[]) {
     }, delay);
     return () => clearTimeout(t);
   }, [txt, del, i, words, reduced]);
-  return { txt, i };
+  return txt;
 }
 
 type RepoStatus = "loading" | "live" | "fallback";
@@ -620,7 +543,7 @@ function useRepos() {
   const [status, setStatus] = useState<RepoStatus>("loading");
   useEffect(() => {
     let off = false;
-    const KEY = "wd-repos-v1";
+    const KEY = "nx-repos-v1";
     try {
       const cached = sessionStorage.getItem(KEY);
       if (cached) {
@@ -669,139 +592,23 @@ function useRepos() {
 
 /* ───────────────────────── Illustrations ───────────────────────── */
 
-const codeLines: [number, [number, string][]][] = [
-  [0, [[60, "#c678dd"], [110, "#e6edf3"], [40, "#e5c07b"]]],
-  [1, [[50, "#61afef"], [90, "#e6edf3"], [70, "#98c379"]]],
-  [1, [[70, "#c678dd"], [130, "#e6edf3"]]],
-  [2, [[40, "#e5c07b"], [100, "#98c379"], [50, "#e6edf3"]]],
-  [2, [[80, "#61afef"], [60, "#e6edf3"], [90, "#d19a66"]]],
-  [1, [[30, "#c678dd"], [120, "#e6edf3"]]],
-  [0, [[26, "#e6edf3"]]],
-  [0, [[70, "#c678dd"], [100, "#61afef"], [60, "#98c379"]]],
-];
-
-function Scene({ p }: { p: PKey }) {
-  if (p === "coder") {
-    return (
-      <svg viewBox="0 0 560 420" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of code in an editor window" className="h-full w-full">
-        <rect width="560" height="420" fill="#0b121b" />
-        <rect width="560" height="40" fill="#141d2a" />
-        {["#ff5f56", "#ffbd2e", "#27c93f"].map((c, i) => (
-          <circle key={c} cx={24 + i * 22} cy="20" r="6" fill={c} />
-        ))}
-        <text x="120" y="25" fill="#8b98a9" fontSize="13" fontFamily="JetBrains Mono, monospace">server.ts — sachin/portfolio</text>
-        {codeLines.map(([ind, segs], row) => {
-          let x = 54 + ind * 26;
-          return (
-            <g key={row}>
-              <text x="20" y={84 + row * 34} fill="#3b4a5e" fontSize="12" fontFamily="JetBrains Mono, monospace">{row + 1}</text>
-              {segs.map(([w, c], k) => {
-                const rect = <rect key={k} x={x} y={72 + row * 34} width={w} height="12" rx="3" fill={c} opacity=".9" />;
-                x += w + 10;
-                return rect;
-              })}
-            </g>
-          );
-        })}
-        <rect x="260" y="348" width="9" height="16" fill="#39ff88" style={{ animation: "wd-blink 1s steps(1) infinite" }} />
-        <g fontFamily="JetBrains Mono, monospace" fontWeight="800" fill="#39ff88" opacity=".8" className="wd-bobsvg">
-          <text x="440" y="120" fontSize="44">{"{ }"}</text>
-          <text x="400" y="250" fontSize="34" fill="#58a6ff">{"</>"}</text>
-          <text x="470" y="330" fontSize="30" fill="#e5c07b">{"=>"}</text>
-        </g>
-      </svg>
-    );
-  }
-  if (p === "traveller") {
-    return (
-      <svg viewBox="0 0 560 420" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of mountains and a road at sunset" className="h-full w-full">
-        <defs>
-          <linearGradient id="tsky" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#ff9a62" />
-            <stop offset="0.6" stopColor="#ffd3a1" />
-            <stop offset="1" stopColor="#fff0d6" />
-          </linearGradient>
-          <radialGradient id="tsun"><stop offset="0" stopColor="#fff8d6" /><stop offset="1" stopColor="#ffd166" /></radialGradient>
-        </defs>
-        <rect width="560" height="420" fill="url(#tsky)" />
-        <circle cx="400" cy="170" r="70" fill="#fff3c4" opacity=".45" />
-        <circle cx="400" cy="170" r="48" fill="url(#tsun)" />
-        <g className="wd-drift" fill="#fff" opacity=".85">
-          <ellipse cx="120" cy="90" rx="46" ry="12" />
-          <ellipse cx="150" cy="80" rx="30" ry="11" />
-          <ellipse cx="300" cy="60" rx="38" ry="10" />
-        </g>
-        <g className="wd-plane">
-          <path d="M0 40 l26 -6 l-6 10 l12 6 l-30 2 z" fill="#0f3b4a" />
-        </g>
-        <path d="M0 250 L90 160 L150 215 L230 130 L320 230 L400 170 L470 235 L560 190 V420 H0Z" fill="#f4a582" />
-        <path d="M0 290 L110 210 L190 270 L280 190 L380 280 L470 220 L560 270 V420 H0Z" fill="#d6604d" />
-        <path d="M230 130 l22 22 l-16 -6 l-10 14 l-8 -16 l-14 8z" fill="#fff" opacity=".8" />
-        <path d="M0 330 Q140 300 280 320 T560 310 V420 H0Z" fill="#7a3340" />
-        <path d="M260 322 Q220 360 150 420 H410 Q330 360 300 322Z" fill="#2b1f2a" />
-        <path d="M280 326 Q268 366 250 420" stroke="#ffd166" strokeWidth="4" strokeDasharray="14 12" fill="none" />
-      </svg>
-    );
-  }
-  return (
-    <svg viewBox="0 0 560 420" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of green farm fields with a barn and windmill" className="h-full w-full">
-      <defs>
-        <linearGradient id="fsky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#cfe9f5" />
-          <stop offset="1" stopColor="#fdf3d2" />
-        </linearGradient>
-        <clipPath id="ffield"><path d="M0 250 Q200 215 380 245 T560 235 V420 H0Z" /></clipPath>
-      </defs>
-      <rect width="560" height="420" fill="url(#fsky)" />
-      <circle cx="110" cy="90" r="40" fill="#ffd45e" />
-      <circle cx="110" cy="90" r="58" fill="#ffd45e" opacity=".25" />
-      <g className="wd-drift" fill="#fff" opacity=".9">
-        <ellipse cx="300" cy="80" rx="50" ry="13" />
-        <ellipse cx="335" cy="68" rx="32" ry="12" />
-        <ellipse cx="470" cy="120" rx="36" ry="10" />
-      </g>
-      <path d="M0 230 Q120 170 250 215 T560 200 V420 H0Z" fill="#b6d98a" />
-      <path d="M0 250 Q200 215 380 245 T560 235 V420 H0Z" fill="#6fa83a" />
-      <g clipPath="url(#ffield)" stroke="#3f6d1a" strokeWidth="2" opacity=".45">
-        {Array.from({ length: 22 }).map((_, i) => (
-          <line key={i} x1="280" y1="236" x2={-260 + i * 56} y2="430" />
-        ))}
-      </g>
-      <g>
-        <rect x="50" y="190" width="86" height="62" fill="#b5472f" />
-        <path d="M42 192 L93 150 L144 192Z" fill="#7e2d1e" />
-        <path d="M70 252 V212 H116 V252 M70 212 L116 252 M116 212 L70 252" stroke="#fff3e0" strokeWidth="3" fill="none" />
-      </g>
-      <g>
-        <path d="M462 245 L470 150 L478 245Z" fill="#8a5a2b" />
-        <g className="wd-spin" style={{ transformOrigin: "470px 150px" }}>
-          {[0, 90, 180, 270].map((a) => (
-            <rect key={a} x="466" y="96" width="8" height="54" fill="#fdf3d2" stroke="#8a5a2b" strokeWidth="2" transform={`rotate(${a} 470 150)`} />
-          ))}
-        </g>
-        <circle cx="470" cy="150" r="6" fill="#8a5a2b" />
-      </g>
-    </svg>
-  );
-}
-
 function Art({ kind }: { kind: ArtKind }) {
   const common = { viewBox: "0 0 300 220", preserveAspectRatio: "xMidYMid slice" as const, className: "h-full w-full", "aria-hidden": true };
   if (kind === "code")
     return (
       <svg {...common}>
-        <rect width="300" height="220" fill="#0b121b" />
+        <rect width="300" height="220" fill="#0b0b0b" />
         {[0, 1, 2, 3, 4, 5].map((i) => (
-          <rect key={i} x={24 + (i % 3) * 22} y={30 + i * 26} width={80 + ((i * 37) % 120)} height="10" rx="3" fill={["#c678dd", "#61afef", "#98c379", "#e5c07b"][i % 4]} opacity=".9" />
+          <rect key={i} x={24 + (i % 3) * 22} y={30 + i * 26} width={80 + ((i * 37) % 120)} height="10" rx="3" fill={["#E50914", "#ffffff", "#8c8c8c", "#b20710"][i % 4]} opacity=".9" />
         ))}
-        <text x="214" y="180" fontSize="46" fontWeight="800" fill="#39ff88" fontFamily="JetBrains Mono, monospace">{"</>"}</text>
+        <text x="214" y="180" fontSize="46" fontWeight="800" fill="#E50914" fontFamily="Bebas Neue, Impact, sans-serif">{"</>"}</text>
       </svg>
     );
   if (kind === "mountain")
     return (
       <svg {...common}>
-        <defs><linearGradient id="am" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#7ec8f2" /><stop offset="1" stopColor="#ffe9c9" /></linearGradient></defs>
-        <rect width="300" height="220" fill="url(#am)" />
+        <defs><linearGradient id="nxm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#7ec8f2" /><stop offset="1" stopColor="#ffe9c9" /></linearGradient></defs>
+        <rect width="300" height="220" fill="url(#nxm)" />
         <circle cx="236" cy="52" r="20" fill="#fff4c2" />
         <path d="M0 190 L70 80 L120 150 L170 60 L240 160 L300 110 V220 H0Z" fill="#5b7fa6" />
         <path d="M170 60 l18 28 l-14 -6 l-8 12 l-8 -12 l-14 6z" fill="#fff" />
@@ -828,9 +635,9 @@ function Art({ kind }: { kind: ArtKind }) {
       <svg {...common}>
         <rect width="300" height="220" fill="#f7d9a8" />
         <g stroke="#b9722c" strokeWidth="5" strokeLinecap="round" fill="none">
-          <path className="wd-steam" d="M125 80 q-10 -14 0 -26" />
-          <path className="wd-steam" style={{ animationDelay: "1s" }} d="M150 82 q-10 -14 0 -26" />
-          <path className="wd-steam" style={{ animationDelay: "2s" }} d="M175 80 q-10 -14 0 -26" />
+          <path className="nx-steam" d="M125 80 q-10 -14 0 -26" />
+          <path className="nx-steam" style={{ animationDelay: "1s" }} d="M150 82 q-10 -14 0 -26" />
+          <path className="nx-steam" style={{ animationDelay: "2s" }} d="M175 80 q-10 -14 0 -26" />
         </g>
         <path d="M100 100 H200 L190 170 Q150 190 110 170Z" fill="#fff8ec" stroke="#b9722c" strokeWidth="4" />
         <path d="M200 114 q30 4 20 26 q-8 12 -26 10" fill="none" stroke="#b9722c" strokeWidth="4" />
@@ -840,8 +647,8 @@ function Art({ kind }: { kind: ArtKind }) {
   if (kind === "road")
     return (
       <svg {...common}>
-        <defs><linearGradient id="ar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ff9a62" /><stop offset="1" stopColor="#ffe4bd" /></linearGradient></defs>
-        <rect width="300" height="220" fill="url(#ar)" />
+        <defs><linearGradient id="nxr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ff9a62" /><stop offset="1" stopColor="#ffe4bd" /></linearGradient></defs>
+        <rect width="300" height="220" fill="url(#nxr)" />
         <circle cx="210" cy="96" r="26" fill="#fff3c4" />
         <path d="M0 120 L60 80 L110 110 L170 70 L230 108 L300 84 V220 H0Z" fill="#d6604d" />
         <path d="M0 140 Q150 120 300 138 V220 H0Z" fill="#7a3340" />
@@ -864,98 +671,126 @@ function Art({ kind }: { kind: ArtKind }) {
 /* ───────────────────────── Page ───────────────────────── */
 
 function Portfolio() {
-  const [p, setP] = useState<PKey>("coder");
+  const [dark, setDark] = useState(true);
+  const [intro, setIntro] = useState(true);
   const { repos, status } = useRepos();
 
   useEffect(() => {
+    let d = !window.matchMedia("(prefers-color-scheme: light)").matches;
     try {
-      const saved = localStorage.getItem("wd-world") as PKey | null;
-      if (saved && P_KEYS.includes(saved)) setP(saved);
+      const saved = localStorage.getItem("nx-theme");
+      if (saved) d = saved === "dark";
     } catch {
       /* storage unavailable */
     }
+    setDark(d);
+
+    let skip = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    try {
+      if (sessionStorage.getItem("nx-intro")) skip = true;
+      else sessionStorage.setItem("nx-intro", "1");
+    } catch {
+      /* storage unavailable */
+    }
+    if (skip) {
+      setIntro(false);
+      return;
+    }
+    const t = setTimeout(() => setIntro(false), 2200);
+    return () => clearTimeout(t);
   }, []);
 
-  const choose = (k: PKey) => {
-    setP(k);
+  const toggle = () => {
+    const next = !dark;
+    setDark(next);
     try {
-      localStorage.setItem("wd-world", k);
+      localStorage.setItem("nx-theme", next ? "dark" : "light");
     } catch {
       /* storage unavailable */
     }
   };
 
-  const T = PERSONAS[p];
-  const dark = p === "coder";
-
   return (
-    <div className="wd min-h-screen" data-p={p} style={{ colorScheme: dark ? "dark" : "light" }}>
+    <div className="nx min-h-screen" data-theme={dark ? "dark" : "light"} style={{ colorScheme: dark ? "dark" : "light" }}>
       <style>{css}</style>
-      <div className="wd-bg wd-bg-coder" aria-hidden="true" />
-      <div className="wd-bg wd-bg-traveller" aria-hidden="true" />
-      <div className="wd-bg wd-bg-farmer" aria-hidden="true" />
-      <div className="wd-scan" aria-hidden="true" />
-
-      <div className="wd-content">
-        <Nav p={p} onChoose={choose} />
-        <main>
-          <Hero p={p} T={T} dark={dark} repoCount={repos.length} />
-          <Ticker dark={dark} />
-          <Worlds p={p} onChoose={choose} />
-          <LiveSites T={T} dark={dark} />
-          <Experience T={T} />
-          <CaseStudies dark={dark} />
-          <Repos T={T} repos={repos} status={status} />
-          <Stack T={T} dark={dark} />
-          <Gallery T={T} />
-          <GitHubStats T={T} />
-          <Education />
-          <Contact T={T} />
-        </main>
-        <Footer />
-      </div>
+      {intro && (
+        <div className="nx-intro" onClick={() => setIntro(false)} aria-hidden="true">
+          <span>S</span>
+        </div>
+      )}
+      <Nav dark={dark} onToggle={toggle} />
+      <main>
+        <Hero repoCount={repos.length} />
+        <LiveSites dark={dark} />
+        <Top10 />
+        <Experience />
+        <CaseStudies dark={dark} />
+        <Repos repos={repos} status={status} />
+        <Genres dark={dark} />
+        <Gallery />
+        <Stats dark={dark} />
+        <Education />
+        <Contact />
+      </main>
+      <Footer />
       <FloatingContact />
     </div>
   );
 }
 
-function Nav({ p, onChoose }: { p: PKey; onChoose: (k: PKey) => void }) {
+function Nav({ dark, onToggle }: { dark: boolean; onToggle: () => void }) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const on = () => setScrolled(window.scrollY > 20);
+    on();
+    window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, []);
   const links = [
+    { h: "#top", l: "Home" },
     { h: "#live", l: "Live sites" },
-    { h: "#repos", l: "Repos" },
+    { h: "#stack", l: "Stack" },
     { h: "#experience", l: "Experience" },
-    { h: "#gallery", l: "Gallery" },
+    { h: "#repos", l: "Repos" },
     { h: "#contact", l: "Contact" },
   ];
   return (
-    <header className="wd-nav sticky top-0 z-40">
-      <div className={`${WRAP} flex h-16 items-center justify-between gap-3`}>
-        <a href="#top" className="flex items-center gap-2.5" aria-label="Sachin Bodare — home">
-          <span className="wd-display grid h-10 w-10 place-items-center rounded-[var(--r)] bg-[var(--acc)] text-sm text-[var(--on-acc)]">SB</span>
-          <span className="wd-display hidden text-base sm:block">Sachin Bodare</span>
-        </a>
-        <nav className="hidden items-center gap-6 text-sm font-semibold lg:flex" aria-label="Primary">
-          {links.map((i) => (
-            <a key={i.h} href={i.h} className="wd-navlink">
-              {i.l}
-            </a>
-          ))}
-        </nav>
-        <div className="wd-seg" role="tablist" aria-label="Choose a world">
-          {P_KEYS.map((k) => {
-            const Icon = PERSONAS[k].icon;
-            return (
-              <button key={k} role="tab" aria-selected={p === k} onClick={() => onChoose(k)} aria-label={PERSONAS[k].label}>
-                <Icon className="h-4 w-4" />
-                <span className="hidden sm:inline">{PERSONAS[k].label}</span>
-              </button>
-            );
-          })}
+    <header className="fixed inset-x-0 top-0 z-40 transition-colors duration-300" style={scrolled ? { background: "var(--bg)", boxShadow: "0 8px 24px -12px rgba(0,0,0,.45)" } : { background: "var(--nav-grad)" }}>
+      <div className={`${WRAP} ${PAD} flex h-16 items-center justify-between gap-4`}>
+        <div className="flex items-center gap-8">
+          <a href="#top" className="nx-display nx-red text-3xl tracking-wider sm:text-4xl" aria-label="Sachin Bodare — home">
+            SACHIN
+          </a>
+          <nav className="hidden items-center gap-5 text-sm font-semibold lg:flex" aria-label="Primary">
+            {links.map((i) => (
+              <a key={i.h} href={i.h} className="nx-link">
+                {i.l}
+              </a>
+            ))}
+          </nav>
+        </div>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <a href="#repos" aria-label="Search repositories" className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-[var(--sec)]">
+            <Search className="h-5 w-5" />
+          </a>
+          <button
+            onClick={onToggle}
+            aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+            aria-pressed={!dark}
+            className="relative grid h-9 w-9 place-items-center rounded-full transition hover:bg-[var(--sec)]"
+          >
+            <Sun className={`absolute h-5 w-5 transition-all duration-500 ${dark ? "rotate-0 scale-100 opacity-100" : "rotate-90 scale-0 opacity-0"}`} />
+            <Moon className={`absolute h-5 w-5 transition-all duration-500 ${dark ? "-rotate-90 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"}`} />
+          </button>
+          <img src={portraitAsset} alt="" width={32} height={32} className="hidden h-8 w-8 rounded object-cover sm:block" />
+          <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="nx-redbtn px-4 py-1.5 text-sm">
+            Hire me
+          </a>
         </div>
       </div>
-      <nav aria-label="Sections" className="flex gap-5 overflow-x-auto px-4 pb-2.5 text-sm font-semibold [scrollbar-width:none] lg:hidden">
+      <nav aria-label="Sections" className="nx-scroll flex gap-5 overflow-x-auto px-4 pb-2.5 text-sm font-semibold lg:hidden">
         {links.map((i) => (
-          <a key={i.h} href={i.h} className="wd-navlink shrink-0">
+          <a key={i.h} href={i.h} className="nx-link shrink-0">
             {i.l}
           </a>
         ))}
@@ -964,20 +799,31 @@ function Nav({ p, onChoose }: { p: PKey; onChoose: (k: PKey) => void }) {
   );
 }
 
-function Hero({ p, T, dark, repoCount }: { p: PKey; T: (typeof PERSONAS)[PKey]; dark: boolean; repoCount: number }) {
-  const caseCount = projects.filter((x) => x.caseStudy).length;
+function Hero({ repoCount }: { repoCount: number }) {
+  const txt = useTypewriter(ROLES);
+  const caseCount = projects.filter((p) => p.caseStudy).length;
   const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
-  const { txt } = useTypewriter(ROLES);
-  void dark;
-
   return (
-    <section id="top" className={`${WRAP} scroll-mt-24 pb-16 pt-10 sm:pt-16 lg:pb-24`}>
-      <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
-        <div>
-          <span className="wd-kicker wd-rise" style={d(0)}>
-            {T.kicker}
-          </span>
-          <h1 className="wd-display wd-rise mt-4 text-[2.8rem] leading-[1.02] sm:text-7xl lg:text-[5.4rem]" style={d(100)}>
+    <section id="top" className="relative isolate overflow-hidden pb-24 pt-36 md:pt-40 lg:min-h-[92vh] lg:pb-28">
+      <div
+        className="absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 70% at 78% 30%, rgba(229,9,20,.30), transparent 60%), radial-gradient(ellipse 50% 50% at 8% 100%, rgba(178,7,16,.18), transparent 70%), var(--bg)",
+        }}
+      />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-44" style={{ background: "linear-gradient(to bottom, transparent, var(--bg))" }} />
+
+      <div className={`${WRAP} ${PAD} grid items-center gap-12 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:gap-16`}>
+        <div className="order-2 lg:order-1">
+          <p className="nx-rise mb-4 flex items-center gap-2 text-sm font-bold tracking-wide" style={d(0)}>
+            <span className="h-5 w-1.5 rounded-sm bg-[var(--red)]" /> NOW PLAYING
+            <span className="nx-mute" aria-hidden="true">
+              ▸ {txt}
+              <span className="nx-caret" />
+            </span>
+          </p>
+          <h1 className="nx-display nx-rise text-[4.6rem] leading-[.88] sm:text-[7.5rem] lg:text-[9.5rem]" style={d(100)}>
             <span className="sr-only">Sachin Bodare: software developer, farmer, frontend developer, backend developer and traveller.</span>
             <span aria-hidden="true">
               Sachin
@@ -985,110 +831,48 @@ function Hero({ p, T, dark, repoCount }: { p: PKey; T: (typeof PERSONAS)[PKey]; 
               Bodare
             </span>
           </h1>
-          <p className="wd-display wd-rise mt-5 min-h-[1.3em] text-2xl sm:text-4xl" style={{ ...d(220), color: "var(--acct)" }} aria-hidden="true">
-            <span className="wd-mute text-[.7em] font-semibold">a </span>
-            {txt}
-            <span className="wd-caret" />
+          <div className="nx-rise mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm sm:text-base" style={d(220)}>
+            <span className="font-bold text-[var(--green)]">Open to work</span>
+            <span className="nx-mute">Pune, India</span>
+            {["3+ yrs", `${liveSites.length} live sites`, `${repoCount} repos`, ...(caseCount > 0 ? [`${caseCount} case studies`] : [])].map((m) => (
+              <span key={m} className="rounded-[3px] border border-[var(--line)] px-1.5 text-xs">
+                {m}
+              </span>
+            ))}
+          </div>
+          <p className="nx-rise mt-5 max-w-xl text-base leading-relaxed sm:text-lg" style={d(320)}>
+            I build web apps that hold up in production — travel platforms, HRMS, commerce and SaaS — with React, Next.js, Node and MongoDB. Off screen I'm in the fields or on the road.
           </p>
-          <p className="wd-mute wd-rise mt-6 max-w-xl text-lg leading-relaxed" style={d(320)}>
-            {T.blurb}
-          </p>
-          <div className="wd-rise mt-9 flex flex-wrap gap-3" style={d(420)}>
-            <a href="#live" className="wd-btn inline-flex items-center gap-2 px-7 py-3.5 text-base">
-              See live projects <ArrowUpRight className="h-5 w-5" />
+          <div className="nx-rise mt-8 flex flex-wrap gap-3" style={d(420)}>
+            <a href="#live" className="nx-btn px-6 py-2.5 text-base sm:px-8 sm:py-3 sm:text-lg">
+              <Play className="h-5 w-5 fill-current sm:h-6 sm:w-6" /> See live sites
             </a>
-            <a href="#contact" className="wd-ghost inline-flex items-center gap-2 px-7 py-3.5 text-base">
-              <MessageCircle className="h-5 w-5" /> {T.cta}
+            <a href="#about" className="nx-sec px-6 py-2.5 text-base sm:px-8 sm:py-3 sm:text-lg">
+              <Info className="h-5 w-5 sm:h-6 sm:w-6" /> More info
             </a>
-            <a href={OLD_PORTFOLIO} target="_blank" rel="noreferrer" className="wd-navlink inline-flex items-center gap-2 px-4 py-3.5 text-base font-bold">
+            <a href={OLD_PORTFOLIO} target="_blank" rel="noreferrer" className="nx-chip inline-flex items-center gap-2 px-5 py-2.5 text-base font-semibold sm:py-3">
               <Download className="h-5 w-5" /> Resume
             </a>
           </div>
-          <p className="wd-mute wd-rise mt-8 text-sm font-semibold" style={d(520)}>
-            Open to work · Pune · {liveSites.length} live sites · {repoCount} public repos{caseCount > 0 ? ` · ${caseCount} case studies` : ""}
-          </p>
         </div>
 
-        <div className="wd-rise relative pb-10" style={d(260)}>
-          <Tilt max={6} scale={1.015}>
-            <div key={p} className="wd-card wd-fade relative aspect-[4/3] overflow-hidden">
-              <Scene p={p} />
-              <div className="wd-shine absolute inset-0" />
+        <div className="nx-rise order-1 flex justify-center lg:order-2 lg:justify-end" style={d(260)}>
+          <Tilt max={14} scale={1.04} className="relative">
+            <div className="absolute -inset-8 -z-10 rounded-full bg-[#E50914]/25 blur-3xl" />
+            <div className="relative h-[19rem] w-60 overflow-hidden rounded-md bg-[var(--surface)] shadow-2xl ring-1 ring-[var(--line)] sm:h-[26rem] sm:w-80 lg:h-[30rem] lg:w-[22rem]">
+              <img src={portraitAsset} alt="Sachin Bodare portrait" width={512} height={512} className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+              <div className="nx-glare absolute inset-0" />
+              <span className="nx-display absolute bottom-3 left-4 text-5xl text-white">SB</span>
             </div>
+            <span className="nx-float absolute -left-3 top-6 rounded bg-[var(--red)] px-3 py-1 text-xs font-bold text-white shadow-lg sm:-left-8" style={{ transform: "translateZ(60px)" }}>
+              Recently added
+            </span>
+            <span className="nx-float absolute -right-2 bottom-12 inline-flex items-center gap-1.5 rounded bg-white px-3 py-1 text-xs font-bold text-black shadow-lg sm:-right-8" style={{ transform: "translateZ(60px)", animationDelay: "1.2s" }}>
+              <Coffee className="h-3.5 w-3.5" /> Ships code
+            </span>
           </Tilt>
-          <div className="absolute -bottom-0 -left-2 w-36 sm:-left-8 sm:w-48">
-            <div className="wd-frame aspect-[4/5]">
-              <div className="wd-frame-bar">
-                <i className="h-2 w-2 rounded-full bg-[#ff5f56]" />
-                <i className="h-2 w-2 rounded-full bg-[#ffbd2e]" />
-                <i className="h-2 w-2 rounded-full bg-[#27c93f]" />
-                <span className="ml-1">me.jpg</span>
-              </div>
-              <img src={portraitAsset} alt="Sachin Bodare portrait" width={512} height={512} />
-              <span className="wd-frame-cap">Pune → anywhere</span>
-            </div>
-            <span className="wd-tape" aria-hidden="true" />
-          </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-function Ticker({ dark }: { dark: boolean }) {
-  const items = [...tickerTech, ...tickerTech];
-  return (
-    <div className="wd-marq-wrap overflow-hidden border-y border-[var(--line)] py-4" aria-label="Technologies I use">
-      <div className="wd-marq">
-        {items.map((t, i) => (
-          <span key={`${t}-${i}`} className="wd-display inline-flex items-center gap-2.5 text-sm" style={{ fontWeight: 700 }}>
-            <TechIcon name={t} dark={dark} size={20} />
-            {t}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function Worlds({ p, onChoose }: { p: PKey; onChoose: (k: PKey) => void }) {
-  const cards: { k: PKey; art: ArtKind; title: string; text: string }[] = [
-    { k: "coder", art: "code", title: "The coder", text: "React, Next.js, Node and MongoDB by day. Auth, RBAC, dashboards and the polished front ends on top." },
-    { k: "traveller", art: "mountain", title: "The traveller", text: "Always chasing the next road, view and chai stop. Travel is where my best ideas show up." },
-    { k: "farmer", art: "field", title: "The farmer", text: "Seasons, soil and patience. Farming taught me to plan long, work steady and fix things early." },
-  ];
-  return (
-    <section id="about" className={`${WRAP} scroll-mt-24 py-16 sm:py-24`}>
-      <Heading kicker="About" title="Three lives, one developer." sub="Pick a world. The whole site changes with it." />
-      <div className="grid gap-5 md:grid-cols-3">
-        {cards.map((c, i) => {
-          const Icon = PERSONAS[c.k].icon;
-          const active = p === c.k;
-          return (
-            <Reveal key={c.k} delay={i * 90} className="h-full">
-              <Tilt max={6} className="h-full">
-                <article className="wd-card flex h-full flex-col overflow-hidden" style={active ? { borderColor: "var(--acc)" } : undefined}>
-                  <div className="aspect-[3/2] overflow-hidden">
-                    <Art kind={c.art} />
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <h3 className="wd-display flex items-center gap-2 text-2xl">
-                      <Icon className="wd-acct h-5 w-5" /> {c.title}
-                    </h3>
-                    <p className="wd-mute mt-3 text-[15px] leading-relaxed">{c.text}</p>
-                    <button
-                      onClick={() => onChoose(c.k)}
-                      aria-pressed={active}
-                      className={`mt-auto pt-5 text-left text-sm font-bold ${active ? "wd-acct" : "wd-navlink"}`}
-                    >
-                      {active ? "You're in this world" : `Switch to ${PERSONAS[c.k].label.toLowerCase()} mode →`}
-                    </button>
-                  </div>
-                </article>
-              </Tilt>
-            </Reveal>
-          );
-        })}
       </div>
     </section>
   );
@@ -1098,121 +882,126 @@ function ShotImg({ site }: { site: Site }) {
   const [failed, setFailed] = useState(false);
   const src = `https://image.thum.io/get/width/900/crop/560/noanimate/${site.url}`;
   return (
-    <div className="relative aspect-[16/10] overflow-hidden bg-[color-mix(in_srgb,var(--acc)_14%,transparent)]">
+    <div className="relative aspect-video overflow-hidden" style={failed ? { background: artFor(site.name) } : { background: "var(--raised)" }}>
       {failed ? (
-        <span className="wd-display absolute inset-0 grid place-items-center text-7xl text-[var(--acct)] sm:text-8xl">{initialsOf(site.name)}</span>
+        <span className="nx-display absolute inset-0 grid place-items-center text-7xl text-white/90">{initialsOf(site.name)}</span>
       ) : (
-        <img src={src} alt={`${site.name} homepage preview`} width={900} height={560} loading="lazy" onError={() => setFailed(true)} className="wd-shot h-full w-full object-cover object-top" />
+        <img src={src} alt={`${site.name} homepage preview`} width={900} height={560} loading="lazy" onError={() => setFailed(true)} className="nx-shot h-full w-full object-cover object-top" />
       )}
-      <div className="wd-shine absolute inset-0" />
+      <span className="absolute left-2 top-2 inline-flex items-center gap-1.5 rounded-[3px] bg-black/70 px-2 py-0.5 text-[11px] font-bold text-white">
+        <i className="nx-live h-1.5 w-1.5 rounded-full bg-[#46d369]" /> LIVE
+      </span>
+      <div className="nx-glare absolute inset-0" />
     </div>
   );
 }
 
-function LiveSites({ T, dark }: { T: (typeof PERSONAS)[PKey]; dark: boolean }) {
+function LiveSites({ dark }: { dark: boolean }) {
   const [cat, setCat] = useState("All");
   const list = liveSites.filter((s) => cat === "All" || s.cat === cat);
   return (
-    <section id="live" className={`${WRAP} scroll-mt-24 py-12 sm:py-20`}>
-      <Heading kicker="Live sites" title={T.live} sub={`${liveSites.length} production websites and apps you can open right now.`} />
-      <div className="-mx-4 mb-8 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-        {siteCats.map((c) => {
-          const active = cat === c;
-          return (
-            <button
-              key={c}
-              onClick={() => setCat(c)}
-              aria-pressed={active}
-              className={`shrink-0 px-4 py-2 text-sm ${active ? "wd-btn" : "wd-ghost"}`}
-            >
+    <Row
+      id="live"
+      title="Trending now: live sites"
+      hint={
+        <div className="nx-scroll -mx-1 flex max-w-full gap-2 overflow-x-auto px-1 py-1" role="group" aria-label="Filter by genre">
+          {siteCats.map((c) => (
+            <button key={c} onClick={() => setCat(c)} aria-pressed={cat === c} className="nx-chip shrink-0 px-3.5 py-1 text-sm font-semibold">
               {c}
             </button>
-          );
-        })}
-      </div>
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {list.map((s, i) => (
-          <Reveal key={s.url} delay={(i % 3) * 80} className={`h-full ${s.feat && cat === "All" ? "lg:col-span-2" : ""}`}>
-            <Tilt max={6} scale={1.02} className="h-full">
-              <article className="wd-card relative flex h-full flex-col overflow-hidden">
-                <div className="flex items-center gap-3 border-b border-[var(--line)] px-4 py-2.5">
-                  <span className="wd-dots" aria-hidden="true">
-                    <i className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
-                    <i className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
-                    <i className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
-                  </span>
-                  <span className="wd-chip wd-mute min-w-0 flex-1 truncate px-3 py-1 text-xs font-semibold">{hostOf(s.url)}</span>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#2fae77]">
-                    <i className="wd-live h-2 w-2 rounded-full bg-[#3ddc97]" /> Live
-                  </span>
+          ))}
+        </div>
+      }
+    >
+      {list.map((s) => (
+        <div key={s.url} className="w-[78vw] shrink-0 snap-start sm:w-[340px]">
+          <Tilt max={6} scale={1.03} className="h-full">
+            <article className="nx-card relative flex h-full flex-col overflow-hidden">
+              <ShotImg site={s} />
+              <div className="flex flex-1 flex-col p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="text-lg font-extrabold leading-tight">{s.name}</h3>
+                  <ExternalLink className="nx-mute mt-1 h-4 w-4 shrink-0 transition group-hover:text-[var(--red)]" />
                 </div>
-                <ShotImg site={s} />
-                <div className="flex flex-1 flex-col p-5">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="wd-display text-xl leading-tight sm:text-2xl">{s.name}</h3>
-                    <span className="wd-badge shrink-0">{s.cat}</span>
-                  </div>
-                  <p className="wd-mute mt-2 text-sm leading-relaxed">{s.blurb}</p>
-                  <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-4">
-                    <div className="flex flex-wrap gap-1.5 text-xs font-bold">
-                      {(s.stack ?? []).map((t) => (
-                        <span key={t} className="wd-chip inline-flex items-center gap-1.5 px-2.5 py-1">
-                          <TechIcon name={t} dark={dark} size={12} />
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                    <span className="wd-acct inline-flex items-center gap-1 text-sm font-bold">
-                      Visit site <ArrowUpRight className="h-4 w-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <p className="nx-faint mt-0.5 text-xs font-semibold">{hostOf(s.url)}</p>
+                <p className="nx-mute mt-2 line-clamp-3 text-sm leading-relaxed">{s.blurb}</p>
+                <div className="mt-auto flex flex-wrap items-center gap-1.5 pt-3 text-xs font-semibold">
+                  <span className="nx-tag px-2 py-0.5">{s.cat}</span>
+                  {(s.stack ?? []).map((t) => (
+                    <span key={t} className="nx-tag inline-flex items-center gap-1 px-2 py-0.5">
+                      <TechIcon name={t} dark={dark} size={12} />
+                      {t}
                     </span>
-                  </div>
+                  ))}
                 </div>
-                <a href={s.url} target="_blank" rel="noreferrer" aria-label={`Open ${s.name} (${hostOf(s.url)})`} className="absolute inset-0" style={{ borderRadius: "var(--rb)" }} />
-              </article>
-            </Tilt>
-          </Reveal>
-        ))}
-      </div>
-    </section>
+              </div>
+              <a href={s.url} target="_blank" rel="noreferrer" aria-label={`Open ${s.name} (${hostOf(s.url)})`} className="absolute inset-0 rounded-md" />
+            </article>
+          </Tilt>
+        </div>
+      ))}
+    </Row>
   );
 }
 
-function Experience({ T }: { T: (typeof PERSONAS)[PKey] }) {
+function Top10() {
   return (
-    <section id="experience" className={`${WRAP} scroll-mt-24 py-12 sm:py-16`}>
-      <Heading kicker="Experience" title={T.exp} sub={T.expSub} />
-      <ol className="relative space-y-6 border-l-2 border-[var(--line)] pl-6 sm:pl-10">
-        {experience.map((e, i) => (
-          <li key={e.role + e.company} className="relative">
-            <span
-              className="absolute -left-[33px] top-7 grid h-4 w-4 place-items-center rounded-full border-4 sm:-left-[49px]"
-              style={{ background: i === 0 ? "var(--acc)" : "var(--acc2)", borderColor: "var(--bg)" }}
-            />
-            <Reveal delay={i * 90}>
-              <article className="wd-card p-6 sm:p-8">
-                <header className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                  <h3 className="wd-display flex items-center gap-2 text-2xl sm:text-3xl">
-                    <Briefcase className="wd-acct h-5 w-5 shrink-0" /> {e.role}
-                  </h3>
-                  <span className="wd-acct text-sm font-bold">{e.period}</span>
-                </header>
-                <p className="wd-mute mt-1 font-semibold">
-                  {e.company} · {e.mode}
+    <Row id="stack" title="Top 10 in my stack" hint={<span className="nx-mute hidden text-sm sm:block">what I reach for first</span>}>
+      {topTech.map((t, i) => (
+        <div key={t} className="flex shrink-0 snap-start items-end">
+          <span className="nx-num -mr-3 text-[8.5rem] sm:text-[11rem]" aria-hidden="true">
+            {i + 1}
+          </span>
+          <Tilt max={8}>
+            <div className="nx-card relative flex h-40 w-28 flex-col items-center justify-end gap-3 overflow-hidden p-3 sm:h-56 sm:w-40" style={{ background: artFor(t) }}>
+              <span className="grid h-12 w-12 place-items-center rounded-xl bg-white/90 sm:h-14 sm:w-14">
+                <TechIcon name={t} dark={false} size={30} />
+              </span>
+              <span className="nx-display text-3xl leading-none text-white sm:text-4xl">{t}</span>
+              <div className="nx-glare absolute inset-0" />
+            </div>
+          </Tilt>
+        </div>
+      ))}
+    </Row>
+  );
+}
+
+function Experience() {
+  return (
+    <Row id="experience" title="Continue watching: experience" hint={<span className="nx-mute hidden text-sm sm:block">newest first</span>}>
+      {experience.map((e) => (
+        <div key={e.role + e.company} className="w-[82vw] shrink-0 snap-start sm:w-[400px]">
+          <Tilt max={5} scale={1.02} className="h-full">
+            <article className="nx-card flex h-full flex-col overflow-hidden">
+              <div className="relative aspect-[16/7] overflow-hidden" style={{ background: artFor(e.company) }}>
+                <span className="nx-display absolute bottom-2 left-4 text-5xl leading-none text-white/95">{initialsOf(e.company)}</span>
+                {e.current && <span className="absolute left-3 top-3 rounded bg-[var(--red)] px-2 py-0.5 text-xs font-bold text-white">Now playing</span>}
+                <div className="nx-glare absolute inset-0" />
+                <div className="absolute inset-x-0 bottom-0 h-1 bg-white/25">
+                  <div className="h-full bg-[var(--red)]" style={{ width: `${e.progress}%` }} />
+                </div>
+              </div>
+              <div className="flex flex-1 flex-col p-5">
+                <h3 className="text-lg font-extrabold">{e.role}</h3>
+                <p className="text-sm">{e.company}</p>
+                <p className="mt-1 text-xs font-semibold text-[var(--green)]">
+                  {e.period} <span className="nx-faint">· {e.mode}</span>
                 </p>
-                <ul className="mt-5 space-y-2.5 text-[15px] leading-relaxed">
+                <ul className="nx-mute mt-4 space-y-2 text-sm leading-relaxed">
                   {e.bullets.map((b) => (
-                    <li key={b} className="grid grid-cols-[14px_minmax(0,1fr)] gap-2">
-                      <span className="mt-2 h-2 w-2 rounded-full bg-[var(--acc)]" />
+                    <li key={b} className="grid grid-cols-[10px_minmax(0,1fr)] gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--red)]" />
                       <span>{b}</span>
                     </li>
                   ))}
                 </ul>
-              </article>
-            </Reveal>
-          </li>
-        ))}
-      </ol>
-    </section>
+              </div>
+            </article>
+          </Tilt>
+        </div>
+      ))}
+    </Row>
   );
 }
 
@@ -1220,36 +1009,39 @@ function CaseStudies({ dark }: { dark: boolean }) {
   const list = projects.filter((x) => x.caseStudy);
   if (list.length === 0) return null;
   return (
-    <section id="work" className={`${WRAP} scroll-mt-24 py-12 sm:py-20`}>
-      <Heading kicker="Case studies" title="How it was built." sub="A closer look at a few of these projects." />
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {list.map((x, i) => (
-          <Reveal key={x.slug} delay={(i % 3) * 80} className="h-full">
-            <Link to="/case-study/$slug" params={{ slug: x.slug }} className="block h-full" style={{ borderRadius: "var(--rb)" }}>
-              <Tilt max={6} className="h-full">
-                <article className="wd-card flex h-full flex-col p-6">
-                  <span className="wd-badge self-start">{x.tag}</span>
-                  <h3 className="wd-display mt-4 text-xl">{x.name}</h3>
-                  <p className="wd-mute mt-2 line-clamp-3 text-sm leading-relaxed">{x.blurb}</p>
-                  <div className="mt-auto flex flex-wrap gap-1.5 pt-4 text-xs font-bold">
+    <Row id="work" title="My List: case studies">
+      {list.map((x) => (
+        <div key={x.slug} className="w-[78vw] shrink-0 snap-start sm:w-[320px]">
+          <Link to="/case-study/$slug" params={{ slug: x.slug }} className="block h-full rounded-md">
+            <Tilt max={6} className="h-full">
+              <article className="nx-card flex h-full flex-col overflow-hidden">
+                <div className="relative aspect-video overflow-hidden" style={{ background: artFor(x.name) }}>
+                  <span className="nx-display absolute inset-0 grid place-items-center text-7xl text-white/90">{initialsOf(x.name)}</span>
+                  <span className="absolute right-2 top-2 rounded-[3px] bg-[var(--red)] px-2 py-0.5 text-[11px] font-bold text-white">Case study</span>
+                  <div className="nx-glare absolute inset-0" />
+                </div>
+                <div className="flex flex-1 flex-col p-4">
+                  <h3 className="font-extrabold leading-tight">{x.name}</h3>
+                  <p className="nx-mute mt-1.5 line-clamp-2 text-sm leading-relaxed">{x.blurb}</p>
+                  <div className="mt-auto flex flex-wrap gap-1.5 pt-3 text-xs font-semibold">
                     {x.stack.slice(0, 3).map((s) => (
-                      <span key={s} className="wd-chip inline-flex items-center gap-1.5 px-2.5 py-1">
+                      <span key={s} className="nx-tag inline-flex items-center gap-1 px-2 py-0.5">
                         <TechIcon name={s} dark={dark} size={12} />
                         {s}
                       </span>
                     ))}
                   </div>
-                </article>
-              </Tilt>
-            </Link>
-          </Reveal>
-        ))}
-      </div>
-    </section>
+                </div>
+              </article>
+            </Tilt>
+          </Link>
+        </div>
+      ))}
+    </Row>
   );
 }
 
-function Repos({ T, repos, status }: { T: (typeof PERSONAS)[PKey]; repos: Repo[]; status: RepoStatus }) {
+function Repos({ repos, status }: { repos: Repo[]; status: RepoStatus }) {
   const [query, setQuery] = useState("");
   const [lang, setLang] = useState("All");
   const [hideForks, setHideForks] = useState(false);
@@ -1282,34 +1074,34 @@ function Repos({ T, repos, status }: { T: (typeof PERSONAS)[PKey]; repos: Repo[]
   }, [query, lang, hideForks, sort]);
 
   const shown = filtered.slice(0, visible);
+  const isNew = (iso: string) => Date.now() - +new Date(iso) < 90 * 864e5;
 
   return (
-    <section id="repos" className={`${WRAP} scroll-mt-24 py-16 sm:py-24`}>
+    <section id="repos" className={`${WRAP} ${PAD} scroll-mt-20 pt-14 sm:pt-20`}>
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <Heading
-          kicker="GitHub"
-          title={T.repos}
-          sub={
-            status === "fallback"
+        <div>
+          <h2 className="text-2xl font-extrabold sm:text-3xl">All titles: every GitHub repo</h2>
+          <p className="nx-mute mt-2 max-w-2xl text-sm">
+            {status === "fallback"
               ? "GitHub's API didn't respond (it rate-limits visitors), so this is a saved snapshot. Open GitHub for the complete list."
-              : `${repos.length} public repositories, pulled live and sorted by recent activity.`
-          }
-        />
-        <a href={GITHUB} target="_blank" rel="noreferrer" className="wd-ghost mb-10 inline-flex items-center gap-2 px-5 py-2.5 text-sm">
+              : `${repos.length} public repositories, pulled live and sorted by recent activity.`}
+          </p>
+        </div>
+        <a href={GITHUB} target="_blank" rel="noreferrer" className="nx-chip inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold">
           <Github className="h-4 w-4" /> View profile on GitHub
         </a>
       </div>
 
-      <div className="space-y-4">
+      <div className="mt-6 space-y-4">
         <div className="flex flex-wrap items-center gap-3">
           <div className="relative min-w-[220px] max-w-md flex-1">
             <label htmlFor="repo-search" className="sr-only">
               Search repositories
             </label>
-            <Search className="wd-mute absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2" />
-            <input id="repo-search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search repos, languages" maxLength={100} className="wd-input w-full py-3 pl-11 pr-11 text-sm" />
+            <Search className="nx-mute absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
+            <input id="repo-search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Titles, languages" maxLength={100} className="nx-input w-full py-2.5 pl-10 pr-10 text-sm" />
             {query && (
-              <button onClick={() => setQuery("")} aria-label="Clear search" className="wd-navlink absolute right-2 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center">
+              <button onClick={() => setQuery("")} aria-label="Clear search" className="nx-mute absolute right-2 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full hover:text-[var(--ink)]">
                 <X className="h-4 w-4" />
               </button>
             )}
@@ -1317,70 +1109,70 @@ function Repos({ T, repos, status }: { T: (typeof PERSONAS)[PKey]; repos: Repo[]
           <label className="sr-only" htmlFor="repo-sort">
             Sort repositories
           </label>
-          <select id="repo-sort" value={sort} onChange={(e) => setSort(e.target.value as typeof sort)} className="wd-input px-4 py-3 text-sm font-bold">
+          <select id="repo-sort" value={sort} onChange={(e) => setSort(e.target.value as typeof sort)} className="nx-input px-3 py-2.5 text-sm font-semibold">
             <option value="recent">Recently updated</option>
             <option value="stars">Most starred</option>
             <option value="name">Name A–Z</option>
           </select>
-          <button onClick={() => setHideForks((v) => !v)} aria-pressed={hideForks} className={`px-4 py-3 text-sm ${hideForks ? "wd-btn" : "wd-ghost"}`}>
+          <button onClick={() => setHideForks((v) => !v)} aria-pressed={hideForks} className="nx-chip px-4 py-2 text-sm font-semibold">
             Hide forks
           </button>
         </div>
-        <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-          {langs.map((l) => {
-            const active = lang === l;
-            return (
-              <button key={l} onClick={() => setLang(l)} aria-pressed={active} className={`inline-flex shrink-0 items-center gap-2 px-4 py-2 text-sm ${active ? "wd-btn" : "wd-ghost"}`}>
-                {l !== "All" && <i className="h-2.5 w-2.5 rounded-full" style={{ background: LANG_COLORS[l] ?? "#8b8fa8" }} />}
-                {l}
-              </button>
-            );
-          })}
+        <div className="nx-scroll -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
+          {langs.map((l) => (
+            <button key={l} onClick={() => setLang(l)} aria-pressed={lang === l} className="nx-chip inline-flex shrink-0 items-center gap-2 px-4 py-1.5 text-sm font-semibold">
+              {l !== "All" && <i className="h-2.5 w-2.5 rounded-full" style={{ background: LANG_COLORS[l] ?? "#8b8fa8" }} />}
+              {l}
+            </button>
+          ))}
         </div>
-        <p className="wd-mute text-sm" aria-live="polite">
-          {status === "loading" ? "Loading from GitHub…" : `${filtered.length} ${filtered.length === 1 ? "repository" : "repositories"}`}
+        <p className="nx-faint text-xs" aria-live="polite">
+          {status === "loading" ? "Loading from GitHub…" : `${filtered.length} ${filtered.length === 1 ? "title" : "titles"}`}
         </p>
       </div>
 
       {shown.length === 0 ? (
-        <div className="wd-card wd-mute mt-8 p-10 text-center">No repositories match. Clear the search or pick another language.</div>
+        <div className="nx-card nx-mute mt-8 p-10 text-center">No titles match. Clear the search or pick another language.</div>
       ) : (
-        <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {shown.map((r, i) => (
-            <Reveal key={r.id} delay={(i % 3) * 60} className="h-full">
-              <Tilt max={4} scale={1.015} className="h-full">
-                <article className="wd-card relative flex h-full flex-col p-5">
-                  <div className="flex items-start gap-3">
-                    <span className="wd-chip grid h-10 w-10 shrink-0 place-items-center">{r.fork ? <GitFork className="wd-acct h-5 w-5" /> : <Github className="wd-acct h-5 w-5" />}</span>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="wd-display truncate text-lg leading-tight">
-                        <a href={r.html_url} target="_blank" rel="noreferrer" className="after:absolute after:inset-0" style={{ outlineOffset: 2 }}>
-                          {r.name}
+            <Reveal key={r.id} delay={(i % 4) * 60} className="h-full">
+              <Tilt max={4} scale={1.02} className="h-full">
+                <article className="nx-card relative flex h-full flex-col p-5">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="inline-flex items-center gap-2 text-xs font-bold">
+                      {r.fork ? <GitFork className="nx-red h-4 w-4" /> : <Github className="nx-red h-4 w-4" />}
+                      {r.fork ? "Fork" : "Original"}
+                    </span>
+                    <span className="flex items-center gap-2">
+                      {!r.fork && isNew(r.pushed_at) && <span className="rounded-[3px] bg-[var(--red)] px-1.5 py-0.5 text-[10px] font-bold text-white">New</span>}
+                      {r.homepage && /^https?:\/\//.test(r.homepage) && (
+                        <a href={r.homepage} target="_blank" rel="noreferrer" aria-label={`Open ${r.name} live site`} className="nx-tag nx-mute relative z-10 grid h-7 w-7 place-items-center hover:text-[var(--ink)]">
+                          <ExternalLink className="h-3.5 w-3.5" />
                         </a>
-                      </h3>
-                      {r.fork && <span className="wd-mute text-xs font-bold">Forked repository</span>}
-                    </div>
-                    {r.homepage && /^https?:\/\//.test(r.homepage) && (
-                      <a href={r.homepage} target="_blank" rel="noreferrer" aria-label={`Open ${r.name} live site`} className="wd-chip wd-mute relative z-10 grid h-9 w-9 shrink-0 place-items-center transition hover:text-[var(--acct)]">
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    )}
+                      )}
+                    </span>
                   </div>
-                  <p className="wd-mute mt-3 line-clamp-2 text-sm leading-relaxed">{r.description ?? "No description yet."}</p>
-                  <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1 pt-4 text-xs font-bold">
+                  <h3 className="mt-3 truncate text-lg font-extrabold leading-tight">
+                    <a href={r.html_url} target="_blank" rel="noreferrer" className="after:absolute after:inset-0 after:rounded-md">
+                      {r.name}
+                    </a>
+                  </h3>
+                  <p className="nx-mute mt-2 line-clamp-2 text-sm leading-relaxed">{r.description ?? "No description yet."}</p>
+                  <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1 pt-4 text-xs font-semibold">
                     {r.language && (
                       <span className="inline-flex items-center gap-1.5">
                         <i className="h-2.5 w-2.5 rounded-full" style={{ background: LANG_COLORS[r.language] ?? "#8b8fa8" }} />
                         {r.language}
                       </span>
                     )}
-                    <span className="wd-mute inline-flex items-center gap-1">
+                    <span className="nx-mute inline-flex items-center gap-1">
                       <Star className="h-3.5 w-3.5" /> {r.stargazers_count}
                     </span>
-                    <span className="wd-mute inline-flex items-center gap-1">
+                    <span className="nx-mute inline-flex items-center gap-1">
                       <GitFork className="h-3.5 w-3.5" /> {r.forks_count}
                     </span>
-                    <span className="wd-mute ml-auto">Updated {formatMonth(r.pushed_at)}</span>
+                    <span className="nx-faint ml-auto">{formatMonth(r.pushed_at)}</span>
                   </div>
                 </article>
               </Tilt>
@@ -1391,8 +1183,8 @@ function Repos({ T, repos, status }: { T: (typeof PERSONAS)[PKey]; repos: Repo[]
 
       {visible < filtered.length && (
         <div className="mt-10 flex justify-center">
-          <button onClick={() => setVisible((v) => Math.min(v + 12, filtered.length))} className="wd-ghost inline-flex items-center gap-2 px-7 py-3.5 text-sm">
-            <ChevronDown className="h-4 w-4" /> Show {Math.min(12, filtered.length - visible)} more
+          <button onClick={() => setVisible((v) => Math.min(v + 12, filtered.length))} className="nx-sec px-7 py-3 text-sm">
+            <ChevronDown className="h-5 w-5" /> Show {Math.min(12, filtered.length - visible)} more
           </button>
         </div>
       )}
@@ -1400,24 +1192,26 @@ function Repos({ T, repos, status }: { T: (typeof PERSONAS)[PKey]; repos: Repo[]
   );
 }
 
-function Stack({ T, dark }: { T: (typeof PERSONAS)[PKey]; dark: boolean }) {
+function Genres({ dark }: { dark: boolean }) {
   return (
-    <section id="skills" className={`${WRAP} scroll-mt-24 py-12 sm:py-16`}>
-      <Heading kicker="Stack" title={T.stack} sub={T.stackSub} />
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <section id="skills" className={`${WRAP} ${PAD} scroll-mt-20 pt-14 sm:pt-20`}>
+      <h2 className="text-2xl font-extrabold sm:text-3xl">Browse by genre: the full stack</h2>
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {skillGroups.map((g, i) => {
           const Icon = g.icon;
           return (
-            <Reveal key={g.title} delay={(i % 3) * 80} className="h-full">
-              <Tilt max={5} scale={1.015} className="h-full">
-                <div className="wd-card h-full p-6">
-                  <span className="mb-4 grid h-11 w-11 place-items-center rounded-[var(--r)] bg-[var(--acc)] text-[var(--on-acc)]">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <h3 className="wd-display text-xl">{g.title}</h3>
-                  <ul className="mt-4 flex flex-wrap gap-2 text-xs font-bold">
+            <Reveal key={g.title} delay={(i % 3) * 70} className="h-full">
+              <Tilt max={5} scale={1.02} className="h-full">
+                <div className="nx-card h-full p-5">
+                  <div className="mb-4 flex items-center gap-3">
+                    <span className="grid h-9 w-9 place-items-center rounded bg-[var(--red)] text-white">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <h3 className="font-extrabold">{g.title}</h3>
+                  </div>
+                  <ul className="flex flex-wrap gap-2 text-xs font-semibold">
                     {g.items.map((s) => (
-                      <li key={s} className="wd-chip inline-flex items-center gap-1.5 px-3 py-1.5">
+                      <li key={s} className="nx-chip inline-flex items-center gap-1.5 px-3 py-1">
                         <TechIcon name={s} dark={dark} size={14} />
                         {s}
                       </li>
@@ -1433,22 +1227,24 @@ function Stack({ T, dark }: { T: (typeof PERSONAS)[PKey]; dark: boolean }) {
   );
 }
 
-function Gallery({ T }: { T: (typeof PERSONAS)[PKey] }) {
+function Gallery() {
   return (
-    <section id="gallery" className={`${WRAP} scroll-mt-24 py-16 sm:py-24`}>
-      <Heading kicker="Gallery" title={T.gallery} sub={T.gallerySub} />
-      <div className="grid auto-rows-[190px] grid-cols-2 gap-4 md:grid-cols-4 md:auto-rows-[200px]">
+    <section id="gallery" className={`${WRAP} ${PAD} scroll-mt-20 pt-14 sm:pt-20`}>
+      <h2 className="text-2xl font-extrabold sm:text-3xl">Behind the scenes</h2>
+      <p className="nx-mute mt-2 text-sm">Roads, fields and chai stops. Swap in your own photos any time.</p>
+      <div className="mt-6 grid auto-rows-[190px] grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 md:auto-rows-[200px]">
         {PHOTOS.map((ph, i) => (
           <Reveal key={ph.title} delay={(i % 4) * 70} className={`h-full ${ph.span ?? ""}`}>
-            <figure className="wd-card group relative h-full overflow-hidden">
-              <div className="h-full w-full transition-transform duration-700 group-hover:scale-105">
-                {ph.src ? <img src={ph.src} alt={ph.title} loading="lazy" className="h-full w-full object-cover" /> : <Art kind={ph.art} />}
-              </div>
-              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
-                <span className="wd-display block text-base leading-tight sm:text-lg">{ph.title}</span>
-                <span className="block text-xs opacity-85">{ph.caption}</span>
-              </figcaption>
-            </figure>
+            <Tilt max={5} scale={1.02} className="h-full">
+              <figure className="nx-card relative h-full overflow-hidden">
+                <div className="h-full w-full">{ph.src ? <img src={ph.src} alt={ph.title} loading="lazy" className="h-full w-full object-cover" /> : <Art kind={ph.art} />}</div>
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 to-transparent p-4 text-white">
+                  <span className="block text-base font-extrabold leading-tight">{ph.title}</span>
+                  <span className="block text-xs opacity-85">{ph.caption}</span>
+                </figcaption>
+                <div className="nx-glare absolute inset-0" />
+              </figure>
+            </Tilt>
           </Reveal>
         ))}
       </div>
@@ -1459,29 +1255,33 @@ function Gallery({ T }: { T: (typeof PERSONAS)[PKey] }) {
 function StatCard({ icon, title, children }: { icon: ReactNode; title: string; children: ReactNode }) {
   return (
     <Reveal className="h-full">
-      <div className="wd-card h-full p-5">
+      <div className="nx-card h-full p-4 sm:p-5">
         <div className="mb-4 flex items-center gap-2.5">
-          <span className="grid h-8 w-8 place-items-center rounded-[var(--r)] bg-[var(--acc)] text-[var(--on-acc)]">{icon}</span>
-          <h3 className="wd-display text-base">{title}</h3>
+          <span className="grid h-7 w-7 place-items-center rounded bg-[var(--red)] text-white">{icon}</span>
+          <h3 className="text-sm font-extrabold">{title}</h3>
         </div>
-        <div className="overflow-hidden rounded-xl">{children}</div>
+        <div className="overflow-hidden rounded">{children}</div>
       </div>
     </Reveal>
   );
 }
 
-function GitHubStats({ T }: { T: (typeof PERSONAS)[PKey] }) {
-  const c = T.gh;
-  const base = `username=${GITHUB_USER}&hide_border=true&bg_color=00000000&title_color=${c.title}&text_color=${c.text}&icon_color=${c.title}`;
+function Stats({ dark }: { dark: boolean }) {
+  const c = dark
+    ? { text: "ffffff", sub: "b3b3b3", bg: "181818", trophy: "onedark" }
+    : { text: "141414", sub: "5a5a5a", bg: "ffffff", trophy: "flat" };
+  const red = "E50914";
+  const base = `username=${GITHUB_USER}&hide_border=true&bg_color=00000000&title_color=${red}&text_color=${c.text}&icon_color=${red}`;
   const stats = `https://github-readme-stats.vercel.app/api?${base}&show_icons=true&count_private=true&include_all_commits=true`;
   const langs = `https://github-readme-stats.vercel.app/api/top-langs/?${base}&layout=compact&langs_count=10`;
-  const streak = `https://streak-stats.demolab.com/?user=${GITHUB_USER}&hide_border=true&background=00000000&ring=${c.title}&fire=${c.title}&currStreakNum=${c.text}&sideNums=${c.text}&currStreakLabel=${c.title}&sideLabels=${c.sub}&dates=${c.sub}`;
-  const graph = `https://github-readme-activity-graph.vercel.app/graph?username=${GITHUB_USER}&hide_border=true&bg_color=${c.bg}&color=${c.text}&line=${c.title}&point=${c.text}&area=true&area_color=${c.title}&title_color=${c.text}&custom_title=Contribution%20Graph`;
+  const streak = `https://streak-stats.demolab.com/?user=${GITHUB_USER}&hide_border=true&background=00000000&ring=${red}&fire=${red}&currStreakNum=${c.text}&sideNums=${c.text}&currStreakLabel=${red}&sideLabels=${c.sub}&dates=${c.sub}`;
+  const graph = `https://github-readme-activity-graph.vercel.app/graph?username=${GITHUB_USER}&hide_border=true&bg_color=${c.bg}&color=${red}&line=${red}&point=${c.text}&area=true&area_color=${red}&title_color=${c.text}&custom_title=Contribution%20Graph`;
   const trophy = `https://github-profile-trophy.vercel.app/?username=${GITHUB_USER}&theme=${c.trophy}&no-frame=true&no-bg=true&column=7&margin-w=8&margin-h=8`;
   return (
-    <section id="stats" className={`${WRAP} scroll-mt-24 py-12 sm:py-20`}>
-      <Heading kicker="Numbers" title="GitHub, in numbers." sub="Live from GitHub: stats, top languages, streaks and a year of commits." />
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+    <section id="stats" className={`${WRAP} ${PAD} scroll-mt-20 pt-14 sm:pt-20`}>
+      <h2 className="text-2xl font-extrabold sm:text-3xl">GitHub, in numbers</h2>
+      <p className="nx-mute mt-2 max-w-2xl text-sm">Live from GitHub: stats, top languages, streaks and a year of commits.</p>
+      <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
         <StatCard icon={<BarChart3 className="h-4 w-4" />} title="Overall stats">
           <img src={stats} alt="GitHub stats" loading="lazy" className="h-auto w-full" />
         </StatCard>
@@ -1489,7 +1289,7 @@ function GitHubStats({ T }: { T: (typeof PERSONAS)[PKey] }) {
           <img src={langs} alt="Top languages" loading="lazy" className="h-auto w-full" />
         </StatCard>
       </div>
-      <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
         <StatCard icon={<Activity className="h-4 w-4" />} title="Streak">
           <img src={streak} alt="Streak stats" loading="lazy" className="h-auto w-full" />
         </StatCard>
@@ -1497,7 +1297,7 @@ function GitHubStats({ T }: { T: (typeof PERSONAS)[PKey] }) {
           <img src={trophy} alt="Trophies" loading="lazy" className="h-auto w-full" />
         </StatCard>
       </div>
-      <div className="mt-5">
+      <div className="mt-4">
         <StatCard icon={<GitFork className="h-4 w-4" />} title="Contribution graph">
           <img src={graph} alt="Contribution graph" loading="lazy" className="h-auto w-full" />
         </StatCard>
@@ -1508,22 +1308,22 @@ function GitHubStats({ T }: { T: (typeof PERSONAS)[PKey] }) {
 
 function Education() {
   return (
-    <section id="education" className={`${WRAP} scroll-mt-24 py-12 sm:py-16`}>
-      <Heading kicker="Learning" title="Education & learning." />
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+    <section id="education" className={`${WRAP} ${PAD} scroll-mt-20 pt-14 sm:pt-20`}>
+      <h2 className="text-2xl font-extrabold sm:text-3xl">Because you watched: education</h2>
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
         {education.map((e, i) => {
           const Icon = e.icon;
           return (
-            <Reveal key={e.title} delay={i * 90} className="h-full">
-              <div className="wd-card h-full p-6">
-                <span className="mb-4 grid h-11 w-11 place-items-center rounded-[var(--r)] bg-[var(--acc)] text-[var(--on-acc)]">
+            <Reveal key={e.title} delay={i * 80} className="h-full">
+              <div className="nx-card h-full p-5">
+                <span className="mb-4 grid h-10 w-10 place-items-center rounded bg-[var(--red)] text-white">
                   <Icon className="h-5 w-5" />
                 </span>
-                <h3 className="wd-display text-xl leading-tight">{e.title}</h3>
-                <p className="wd-mute mt-1 text-sm">{e.org}</p>
-                <div className="mt-4 flex items-center justify-between text-xs font-bold">
-                  <span className="wd-mute">{e.period}</span>
-                  <span className="wd-acct">{e.detail}</span>
+                <h3 className="font-extrabold">{e.title}</h3>
+                <p className="nx-mute mt-1 text-sm">{e.org}</p>
+                <div className="mt-4 flex items-center justify-between text-xs font-semibold">
+                  <span className="nx-faint">{e.period}</span>
+                  <span className="text-[var(--green)]">{e.detail}</span>
                 </div>
               </div>
             </Reveal>
@@ -1536,10 +1336,10 @@ function Education() {
 
 function ContactLine({ icon, label, value, href }: { icon: ReactNode; label: string; value: string; href?: string }) {
   const inner = (
-    <div className="grid grid-cols-[24px_84px_minmax(0,1fr)] items-center gap-3 rounded-[var(--r)] px-3 py-3 text-sm transition hover:bg-[color-mix(in_srgb,var(--ink)_6%,transparent)]">
-      <span className="wd-acct">{icon}</span>
-      <span className="wd-mute font-semibold">{label}</span>
-      <span className="truncate font-bold">{value}</span>
+    <div className="grid grid-cols-[24px_84px_minmax(0,1fr)] items-center gap-3 border-b border-[var(--line)] px-2 py-3 text-sm transition hover:bg-[var(--sec)]">
+      <span className="nx-red">{icon}</span>
+      <span className="nx-faint">{label}</span>
+      <span className="truncate font-semibold">{value}</span>
     </div>
   );
   return href ? (
@@ -1554,7 +1354,7 @@ function ContactLine({ icon, label, value, href }: { icon: ReactNode; label: str
 function Field({ id, label, children }: { id: string; label: string; children: ReactNode }) {
   return (
     <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-bold">
+      <label htmlFor={id} className="nx-mute mb-1.5 block text-xs font-bold">
         {label}
       </label>
       {children}
@@ -1562,7 +1362,7 @@ function Field({ id, label, children }: { id: string; label: string; children: R
   );
 }
 
-function Contact({ T }: { T: (typeof PERSONAS)[PKey] }) {
+function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -1577,30 +1377,33 @@ function Contact({ T }: { T: (typeof PERSONAS)[PKey] }) {
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
   };
 
-  const input = "wd-input w-full px-4 py-3";
+  const input = "nx-input w-full px-4 py-3";
 
   return (
-    <section id="contact" className={`${WRAP} scroll-mt-24 py-16 sm:py-24`}>
-      <Reveal>
-        <div className="wd-card grid gap-12 p-7 sm:p-12 md:grid-cols-2 md:gap-14">
-          <div>
-            <span className="wd-kicker">Contact</span>
-            <h2 className="wd-display mt-3 text-5xl leading-[1] sm:text-6xl">
-              Have a project? <span className="wd-acct">{T.cta}.</span>
-            </h2>
-            <p className="wd-mute mt-5 max-w-md">Messages go straight to my WhatsApp, the fastest way to reach me. For anything longer, email works too.</p>
-            <div className="-mx-3 mt-6">
-              <ContactLine icon={<MessageCircle className="h-4 w-4" />} label="WhatsApp" value={WHATSAPP_DISPLAY} href={`https://wa.me/${WHATSAPP_NUMBER}`} />
-              <ContactLine icon={<Mail className="h-4 w-4" />} label="Email" value={EMAIL} href={`mailto:${EMAIL}`} />
-              <ContactLine icon={<Github className="h-4 w-4" />} label="GitHub" value="SACHINBODARE07" href={GITHUB} />
-              <ContactLine icon={<Linkedin className="h-4 w-4" />} label="LinkedIn" value="sachin-bodare" href={LINKEDIN} />
-              <ContactLine icon={<Instagram className="h-4 w-4" />} label="Instagram" value="sachinbodare21" href={INSTAGRAM} />
-              <ContactLine icon={<Youtube className="h-4 w-4" />} label="YouTube" value="thingsofthings" href={YOUTUBE} />
-              <ContactLine icon={<Globe className="h-4 w-4" />} label="Resume" value="Download my resume" href={OLD_PORTFOLIO} />
-              <ContactLine icon={<MapPin className="h-4 w-4" />} label="Location" value="Pune, Maharashtra, IN" />
-            </div>
+    <section id="contact" className="relative mt-16 scroll-mt-20 overflow-hidden border-t-8 border-[var(--raised)] sm:mt-24">
+      <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 70% 80% at 20% 0%, rgba(229,9,20,.22), transparent 60%), var(--surface)" }} />
+      <div className={`${WRAP} ${PAD} relative grid gap-12 py-16 sm:py-24 md:grid-cols-2 md:gap-16`}>
+        <div>
+          <h2 className="nx-display text-6xl leading-[.95] sm:text-8xl">
+            Ready to build?
+            <br />
+            <span className="nx-red">Let's talk.</span>
+          </h2>
+          <p className="mt-6 max-w-md text-lg">Messages go straight to my WhatsApp, the fastest way to reach me. For anything longer, email works too.</p>
+          <div className="mt-8">
+            <ContactLine icon={<MessageCircle className="h-4 w-4" />} label="WhatsApp" value={WHATSAPP_DISPLAY} href={`https://wa.me/${WHATSAPP_NUMBER}`} />
+            <ContactLine icon={<Mail className="h-4 w-4" />} label="Email" value={EMAIL} href={`mailto:${EMAIL}`} />
+            <ContactLine icon={<Github className="h-4 w-4" />} label="GitHub" value="SACHINBODARE07" href={GITHUB} />
+            <ContactLine icon={<Linkedin className="h-4 w-4" />} label="LinkedIn" value="sachin-bodare" href={LINKEDIN} />
+            <ContactLine icon={<Instagram className="h-4 w-4" />} label="Instagram" value="sachinbodare21" href={INSTAGRAM} />
+            <ContactLine icon={<Youtube className="h-4 w-4" />} label="YouTube" value="thingsofthings" href={YOUTUBE} />
+            <ContactLine icon={<Globe className="h-4 w-4" />} label="Resume" value="Download my resume" href={OLD_PORTFOLIO} />
+            <ContactLine icon={<MapPin className="h-4 w-4" />} label="Location" value="Pune, Maharashtra, IN" />
           </div>
-          <form onSubmit={onSubmit} className="space-y-4 self-start rounded-[var(--rb)] bg-[color-mix(in_srgb,var(--ink)_4%,transparent)] p-6 sm:p-8">
+        </div>
+        <form onSubmit={onSubmit} className="self-start rounded-md bg-[var(--bg)] p-6 shadow-xl ring-1 ring-[var(--line)] sm:p-10">
+          <h3 className="text-2xl font-extrabold sm:text-3xl">Send a message</h3>
+          <div className="mt-6 space-y-4">
             <Field id="c-name" label="Your name">
               <input id="c-name" value={name} onChange={(e) => setName(e.target.value)} maxLength={100} required placeholder="Jane Doe" className={input} />
             </Field>
@@ -1609,37 +1412,47 @@ function Contact({ T }: { T: (typeof PERSONAS)[PKey] }) {
             </Field>
             <Field id="c-msg" label="Message">
               <textarea id="c-msg" value={message} onChange={(e) => setMessage(e.target.value)} maxLength={1000} required rows={4} placeholder="Tell me about your project" className={`${input} resize-none`} />
-              <div className="wd-mute mt-1 text-right text-xs">{message.length}/1000</div>
+              <div className="nx-faint mt-1 text-right text-xs">{message.length}/1000</div>
             </Field>
-            <button type="submit" className="wd-btn inline-flex w-full items-center justify-center gap-2 px-5 py-3.5 text-base">
-              Send on WhatsApp <Send className="h-4 w-4" />
-            </button>
-          </form>
-        </div>
-      </Reveal>
+          </div>
+          <button type="submit" className="nx-redbtn mt-5 w-full px-5 py-3.5 text-base">
+            Send on WhatsApp <Send className="h-4 w-4" />
+          </button>
+        </form>
+      </div>
     </section>
   );
 }
 
 function Footer() {
+  const links = [
+    { l: "GitHub", h: GITHUB },
+    { l: "LinkedIn", h: LINKEDIN },
+    { l: "Instagram", h: INSTAGRAM },
+    { l: "YouTube", h: YOUTUBE },
+    { l: "Email", h: `mailto:${EMAIL}` },
+    { l: "WhatsApp", h: `https://wa.me/${WHATSAPP_NUMBER}` },
+    { l: "Live sites", h: "#live" },
+    { l: "Experience", h: "#experience" },
+    { l: "Repos", h: "#repos" },
+    { l: "Stack", h: "#stack" },
+    { l: "Stats", h: "#stats" },
+    { l: "Contact", h: "#contact" },
+  ];
   return (
-    <footer className="border-t border-[var(--line)] pb-10 pt-8">
-      <div className={`${WRAP} wd-mute flex flex-col items-start justify-between gap-4 text-sm font-semibold sm:flex-row sm:items-center`}>
-        <span>© {new Date().getFullYear()} Sachin Bodare · Coded, travelled and grown in Pune</span>
-        <div className="flex items-center gap-5">
-          <a href={GITHUB} target="_blank" rel="noreferrer" className="wd-navlink">
-            GitHub
-          </a>
-          <a href={LINKEDIN} target="_blank" rel="noreferrer" className="wd-navlink">
-            LinkedIn
-          </a>
-          <a href={`mailto:${EMAIL}`} className="wd-navlink">
-            Email
-          </a>
-          <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="wd-navlink">
-            WhatsApp
-          </a>
-        </div>
+    <footer style={{ background: "var(--surface)" }}>
+      <div className={`${WRAP} ${PAD} nx-faint py-12 text-sm`}>
+        <p className="mb-6 text-base">Questions? Message {WHATSAPP_DISPLAY}</p>
+        <ul className="grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-4">
+          {links.map((c) => (
+            <li key={c.l}>
+              <a href={c.h} {...(c.h.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})} className="underline underline-offset-2 hover:text-[var(--ink)]">
+                {c.l}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-10">© {new Date().getFullYear()} Sachin Bodare · Built in Pune</p>
       </div>
     </footer>
   );
@@ -1648,9 +1461,7 @@ function Footer() {
 function BrandIcon({ slug, size = 26, Fallback }: { slug: string; size?: number; Fallback: ComponentType<{ className?: string }> }) {
   const [failed, setFailed] = useState(false);
   if (failed) return <Fallback className="h-6 w-6" />;
-  return (
-    <img src={`https://cdn.simpleicons.org/${slug}/ffffff`} alt="" width={size} height={size} loading="lazy" onError={() => setFailed(true)} style={{ width: size, height: size }} />
-  );
+  return <img src={`https://cdn.simpleicons.org/${slug}/ffffff`} alt="" width={size} height={size} loading="lazy" onError={() => setFailed(true)} style={{ width: size, height: size }} />;
 }
 
 function FloatingContact() {
@@ -1667,7 +1478,7 @@ function FloatingContact() {
       label: "Chat on WhatsApp",
       href: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi Sachin, I came across your portfolio and would like to talk.")}`,
       slug: "whatsapp",
-      cls: "wd-fab-wa",
+      cls: "nx-fab-wa",
       Fallback: MessageCircle,
       external: true,
     },
@@ -1676,13 +1487,13 @@ function FloatingContact() {
       label: "Email me",
       href: `mailto:${EMAIL}?subject=${encodeURIComponent("Project enquiry")}`,
       slug: "gmail",
-      cls: "wd-fab-gm",
+      cls: "nx-fab-gm",
       Fallback: Mail,
       external: false,
     },
   ] as const;
   return (
-    <div className="wd-fab" data-in={shown} aria-label="Quick contact">
+    <div className="nx-fab" data-in={shown} aria-label="Quick contact">
       {items.map((it) => (
         <a
           key={it.key}
@@ -1690,9 +1501,9 @@ function FloatingContact() {
           target={it.external ? "_blank" : undefined}
           rel={it.external ? "noreferrer" : undefined}
           aria-label={it.label}
-          className={`wd-fab-btn ${it.cls}`}
+          className={`nx-fab-btn ${it.cls}`}
         >
-          <span className="wd-fab-label">{it.label}</span>
+          <span className="nx-fab-label">{it.label}</span>
           <BrandIcon slug={it.slug} Fallback={it.Fallback} />
         </a>
       ))}
