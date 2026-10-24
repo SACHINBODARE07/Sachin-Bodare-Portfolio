@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -45,6 +46,7 @@ import {
   Sun,
   Moon,
   Coffee,
+  RefreshCw,
 } from "lucide-react";
 import portraitAsset from "@/assets/Sachin-Profile.jpg";
 import { projects } from "@/lib/projects";
@@ -86,6 +88,9 @@ const PAD = "px-4 sm:px-8 lg:px-12";
 
 const ROLES = ["Software Developer", "Farmer", "Frontend Developer", "Backend Developer", "Traveller"];
 
+/** Accent colours used to give cards their own identity. */
+const ACCENTS = ["#E50914", "#ff7a18", "#8b5cf6", "#22d3ee", "#22c55e", "#ec4899"];
+
 /**
  * Your own photos: drop files in /public/photos and set `src` (e.g. "/photos/trek.jpg").
  * Without a `src`, a hand-drawn illustration is shown instead.
@@ -122,7 +127,6 @@ const liveSites: Site[] = [
   { name: "BitSpace", url: "https://www.bitspace.tech/", cat: "Company", blurb: "Website for the BitSpace tech company." },
   { name: "Flying Monk Soul", url: "https://flyingmonksoul.com/", cat: "Brand", blurb: "Brand website for Flying Monk Soul." },
 ];
-const siteCats = ["All", ...Array.from(new Set(liveSites.map((s) => s.cat)))];
 
 type Repo = {
   id: number;
@@ -135,8 +139,9 @@ type Repo = {
   forks_count: number;
   fork: boolean;
   pushed_at: string;
+  created_at?: string;
 };
-/** Snapshot shown only if the GitHub API can't be reached. */
+/** Snapshot shown only if the GitHub API can't be reached and nothing was ever synced. */
 const FALLBACK_REPOS: Repo[] = [
   { id: 1, name: "IInspark", description: null, html_url: `${GITHUB}/IInspark`, homepage: "https://www.iinspark.com/", language: "JavaScript", stargazers_count: 0, forks_count: 0, fork: false, pushed_at: "2026-01-01T00:00:00Z" },
   { id: 2, name: "StudentPortal", description: "ASP.NET MVC CRUD app using Entity Framework Core and SQL Server (.NET 8).", html_url: `${GITHUB}/StudentPortal`, homepage: null, language: "C#", stargazers_count: 1, forks_count: 0, fork: false, pushed_at: "2025-01-01T00:00:00Z" },
@@ -262,6 +267,7 @@ const education = [
 const css = `
 .nx{--red:#E50914;--red-hover:#f6121d;--bg:#141414;--surface:#181818;--raised:#2f2f2f;--ink:#ffffff;--mute:#b3b3b3;--faint:#777;--line:rgba(255,255,255,.12);
   --btn:#ffffff;--btn-ink:#000000;--sec:rgba(109,109,110,.7);--sec-hover:rgba(109,109,110,.45);--green:#46d369;--stroke:#595959;
+  --a1:#E50914;--a2:#ff7a18;--a3:#8b5cf6;--a4:#22d3ee;
   --nav-grad:linear-gradient(to bottom,rgba(0,0,0,.85),rgba(0,0,0,.4) 60%,transparent);--shadow:0 20px 40px -22px rgba(0,0,0,.9);--art-op:1;
   background:var(--bg);color:var(--ink);font-family:'Figtree',system-ui,-apple-system,Segoe UI,sans-serif;-webkit-font-smoothing:antialiased;
   overflow-x:hidden;transition:background-color .5s ease,color .5s ease}
@@ -287,6 +293,7 @@ const css = `
 .nx-chip{border:1px solid var(--line);border-radius:999px;transition:border-color .2s,background-color .2s,color .2s}
 .nx-chip:hover{border-color:var(--ink)}
 .nx-chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.nx-chip:disabled{opacity:.7;cursor:progress}
 .nx-tag{background:var(--raised);border-radius:3px}
 .nx-input{background:var(--raised);color:var(--ink);border-radius:4px;border:1px solid transparent;transition:border-color .2s,background-color .2s}
 .nx-input::placeholder{color:var(--faint)}
@@ -347,9 +354,62 @@ const css = `
 .nx-fab-btn:hover .nx-fab-label,.nx-fab-btn:focus-visible .nx-fab-label{opacity:1;transform:none}
 @media (max-width:420px){.nx-fab-label{display:none}.nx-fab-btn{width:52px;height:52px}}
 
+/* ── Upgrade: colour + motion ── */
+@keyframes nx-shine{to{background-position:200% 0}}
+
+/* Gradient headline */
+.nx-grad-text{background:linear-gradient(100deg,var(--ink),#ff4d5a,#ff9a3c,#8b5cf6,#22d3ee,var(--ink));background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:nx-shine 9s linear infinite}
+
+/* Aurora hero */
+.nx-aurora{position:absolute;inset:-20%;z-index:-10;filter:blur(80px);opacity:.5;pointer-events:none}
+.nx[data-theme="light"] .nx-aurora{opacity:.28}
+.nx-aurora i{position:absolute;border-radius:50%;animation:nx-drift 16s ease-in-out infinite alternate}
+.nx-aurora i:nth-child(1){width:42vw;height:42vw;left:48%;top:4%;background:var(--a1)}
+.nx-aurora i:nth-child(2){width:34vw;height:34vw;left:6%;top:38%;background:var(--a3);animation-delay:-5s}
+.nx-aurora i:nth-child(3){width:30vw;height:30vw;left:62%;top:46%;background:var(--a4);animation-delay:-9s}
+@keyframes nx-drift{to{transform:translate(6vw,-5vh) scale(1.22)}}
+
+/* Scroll progress */
+.nx-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:70;transform-origin:0 50%;transform:scaleX(var(--p,0));
+  background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3),var(--a4))}
+
+/* Tech ticker */
+.nx-marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.nx-marquee-track{display:flex;width:max-content;animation:nx-marq 40s linear infinite}
+.nx-marquee-track>*{margin-right:14px}
+.nx-marquee:hover .nx-marquee-track{animation-play-state:paused}
+@keyframes nx-marq{to{transform:translateX(-50%)}}
+
+/* Spinning rainbow border on card hover */
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+.nx-card{position:relative}
+.nx-card::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:conic-gradient(from var(--ang),transparent 0 62%,var(--a1),var(--a2),var(--a3),var(--a4),transparent);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  animation:nx-spin 3.2s linear infinite}
+.group:hover>.nx-card::after,.nx-card:hover::after{opacity:1}
+.group:hover>.nx-card,.nx-card:hover{box-shadow:inset 0 0 0 1px var(--line),var(--shadow)}
+@keyframes nx-spin{to{--ang:360deg}}
+
+/* Section titles get a colour rule */
+.nx section h2:not(.nx-display)::after{content:"";display:block;width:56px;height:3px;margin-top:8px;border-radius:2px;
+  background:linear-gradient(90deg,var(--a1),var(--a3),var(--a4))}
+
+/* Shimmer sweep on red buttons */
+.nx-redbtn{position:relative;overflow:hidden}
+.nx-redbtn::before{content:"";position:absolute;inset:0;pointer-events:none;transform:translateX(-120%);
+  background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);animation:nx-sweep 3.6s ease-in-out infinite}
+@keyframes nx-sweep{60%,100%{transform:translateX(120%)}}
+
+/* "New" repo badge */
+.nx-new{background:linear-gradient(110deg,var(--a1),var(--a2),var(--a1));background-size:200% 100%;animation:nx-shine 2.4s linear infinite}
+
 @media (prefers-reduced-motion:reduce){
   .nx-tilt{transform:none!important}
   .nx-rise,.nx-caret,.nx-float,.nx-live,.nx-steam,.nx-fab-btn::before{animation:none!important}
+  .nx-aurora i,.nx-grad-text,.nx-marquee-track,.nx-card::after,.nx-redbtn::before,.nx-new{animation:none!important}
+  .nx-progress{display:none}
   .nx-intro{display:none}
   .nx-reveal{opacity:1;transform:none;transition:none}
   .nx-shot{transition:none}
@@ -395,6 +455,35 @@ function formatMonth(iso: string) {
 function initialsOf(name: string) {
   const parts = name.replace(/[^a-zA-Z0-9 ]/g, " ").trim().split(/\s+/);
   return (parts.length > 1 ? parts[0][0] + parts[1][0] : name.slice(0, 2)).toUpperCase();
+}
+
+function ago(ts: number | null) {
+  if (!ts) return "just now";
+  const s = Math.max(0, Math.round((Date.now() - ts) / 1000));
+  if (s < 60) return "just now";
+  if (s < 3600) return `${Math.floor(s / 60)} min ago`;
+  return `${Math.floor(s / 3600)} h ago`;
+}
+
+/** Live sites = your hand-written list + any non-fork repo that has a Website set on GitHub. */
+function mergeSites(repos: Repo[]): Site[] {
+  const known = new Set(liveSites.map((s) => hostOf(s.url)));
+  const extra: Site[] = [];
+  for (const r of repos) {
+    const h = r.homepage?.trim();
+    if (!h || !/^https?:\/\//.test(h) || r.fork) continue;
+    const host = hostOf(h);
+    if (known.has(host)) continue;
+    known.add(host);
+    extra.push({
+      name: r.name.replace(/[-_]+/g, " "),
+      url: h,
+      cat: "New",
+      blurb: r.description ?? `Live project from my GitHub: ${r.name}.`,
+      stack: r.language ? [r.language] : undefined,
+    });
+  }
+  return [...extra, ...liveSites];
 }
 
 function TechIcon({ name, dark, size = 16 }: { name: string; dark: boolean; size?: number }) {
@@ -537,57 +626,163 @@ function useTypewriter(words: string[]) {
   return txt;
 }
 
-type RepoStatus = "loading" | "live" | "fallback";
+/* ── GitHub auto-sync ── */
+
+type RepoStatus = "loading" | "live" | "cached" | "fallback";
+const REPO_KEY = "nx-repos-v2";
+const FRESH_MS = 3 * 60e3; // reuse cache for 3 min
+const POLL_MS = 5 * 60e3; // re-check every 5 min
+
+function readCache(): { t: number; d: Repo[] } | null {
+  try {
+    const raw = localStorage.getItem(REPO_KEY);
+    if (!raw) return null;
+    const { t, d } = JSON.parse(raw);
+    return Array.isArray(d) && d.length ? { t, d } : null;
+  } catch {
+    return null;
+  }
+}
+
 function useRepos() {
   const [repos, setRepos] = useState<Repo[]>(FALLBACK_REPOS);
   const [status, setStatus] = useState<RepoStatus>("loading");
-  useEffect(() => {
-    let off = false;
-    const KEY = "nx-repos-v1";
+  const [updatedAt, setUpdatedAt] = useState<number | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const busy = useRef(false);
+
+  const load = useCallback(async (force = false) => {
+    if (busy.current) return;
+    const cached = readCache();
+    if (!force && cached && Date.now() - cached.t < FRESH_MS) {
+      setRepos(cached.d);
+      setStatus("live");
+      setUpdatedAt(cached.t);
+      return;
+    }
+    busy.current = true;
+    setRefreshing(true);
     try {
-      const cached = sessionStorage.getItem(KEY);
-      if (cached) {
-        const { t, d } = JSON.parse(cached);
-        if (Date.now() - t < 3600e3 && Array.isArray(d) && d.length) {
-          setRepos(d);
-          setStatus("live");
-          return;
-        }
+      const all: Repo[] = [];
+      for (let page = 1; page <= 3; page++) {
+        const res = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?per_page=100&sort=pushed&type=owner&page=${page}`, {
+          headers: { Accept: "application/vnd.github+json" },
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        const batch: Repo[] = await res.json();
+        all.push(...batch);
+        if (batch.length < 100) break;
+      }
+      if (!all.length) throw new Error("empty");
+      const now = Date.now();
+      setRepos(all);
+      setStatus("live");
+      setUpdatedAt(now);
+      try {
+        localStorage.setItem(REPO_KEY, JSON.stringify({ t: now, d: all }));
+      } catch {
+        /* storage unavailable */
       }
     } catch {
-      /* storage unavailable */
+      if (cached) {
+        setRepos(cached.d);
+        setStatus("cached");
+        setUpdatedAt(cached.t);
+      } else setStatus("fallback");
+    } finally {
+      busy.current = false;
+      setRefreshing(false);
     }
-    (async () => {
-      try {
-        const all: Repo[] = [];
-        for (let page = 1; page <= 3; page++) {
-          const res = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?per_page=100&sort=pushed&page=${page}`, {
-            headers: { Accept: "application/vnd.github+json" },
-          });
-          if (!res.ok) throw new Error(String(res.status));
-          const batch: Repo[] = await res.json();
-          all.push(...batch);
-          if (batch.length < 100) break;
-        }
-        if (off) return;
-        if (all.length) {
-          setRepos(all);
-          setStatus("live");
-          try {
-            sessionStorage.setItem(KEY, JSON.stringify({ t: Date.now(), d: all }));
-          } catch {
-            /* storage unavailable */
-          }
-        } else setStatus("fallback");
-      } catch {
-        if (!off) setStatus("fallback");
-      }
-    })();
+  }, []);
+
+  useEffect(() => {
+    const cached = readCache();
+    if (cached) {
+      setRepos(cached.d);
+      setUpdatedAt(cached.t);
+      setStatus("cached");
+    }
+    load();
+    const id = setInterval(() => load(), POLL_MS);
+    const onVis = () => document.visibilityState === "visible" && load();
+    document.addEventListener("visibilitychange", onVis);
     return () => {
-      off = true;
+      clearInterval(id);
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, [load]);
+
+  return { repos, status, updatedAt, refreshing, refresh: () => load(true) };
+}
+
+/* ── Small UI pieces ── */
+
+function ScrollProgress() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const on = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      ref.current?.style.setProperty("--p", String(max > 0 ? h.scrollTop / max : 0));
+    };
+    on();
+    window.addEventListener("scroll", on, { passive: true });
+    window.addEventListener("resize", on);
+    return () => {
+      window.removeEventListener("scroll", on);
+      window.removeEventListener("resize", on);
     };
   }, []);
-  return { repos, status };
+  return <div ref={ref} className="nx-progress" aria-hidden="true" />;
+}
+
+function CountUp({ to }: { to: number }) {
+  const [n, setN] = useState(0);
+  const from = useRef(0);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setN(to);
+      from.current = to;
+      return;
+    }
+    const start = from.current;
+    const t0 = performance.now();
+    let raf = 0;
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - t0) / 1200);
+      const v = Math.round(start + (to - start) * (1 - Math.pow(1 - p, 3)));
+      setN(v);
+      from.current = v;
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [to]);
+  return <>{n}</>;
+}
+
+function Metric({ to, label }: { to: number; label: string }) {
+  return (
+    <span className="rounded-[3px] border border-[var(--line)] px-1.5 text-xs">
+      <CountUp to={to} /> {label}
+    </span>
+  );
+}
+
+function Marquee({ dark }: { dark: boolean }) {
+  const items = Object.keys(TECH);
+  return (
+    <div className="nx-marquee py-6" aria-hidden="true">
+      <div className="nx-marquee-track">
+        {[...items, ...items].map((t, i) => (
+          <span key={t + i} className="nx-chip inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold">
+            <TechIcon name={t} dark={dark} size={18} />
+            {t}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 /* ───────────────────────── Illustrations ───────────────────────── */
@@ -673,7 +868,8 @@ function Art({ kind }: { kind: ArtKind }) {
 function Portfolio() {
   const [dark, setDark] = useState(true);
   const [intro, setIntro] = useState(true);
-  const { repos, status } = useRepos();
+  const { repos, status, updatedAt, refreshing, refresh } = useRepos();
+  const sites = useMemo(() => mergeSites(repos), [repos]);
 
   useEffect(() => {
     let d = !window.matchMedia("(prefers-color-scheme: light)").matches;
@@ -719,13 +915,15 @@ function Portfolio() {
         </div>
       )}
       <Nav dark={dark} onToggle={toggle} />
+      <ScrollProgress />
       <main>
-        <Hero repoCount={repos.length} />
-        <LiveSites dark={dark} />
+        <Hero repoCount={repos.length} siteCount={sites.length} />
+        <Marquee dark={dark} />
+        <LiveSites dark={dark} sites={sites} />
         <Top10 />
         <Experience />
         <CaseStudies dark={dark} />
-        <Repos repos={repos} status={status} />
+        <Repos repos={repos} status={status} updatedAt={updatedAt} refreshing={refreshing} onRefresh={refresh} />
         <Genres dark={dark} />
         <Gallery />
         <Stats dark={dark} />
@@ -799,19 +997,18 @@ function Nav({ dark, onToggle }: { dark: boolean; onToggle: () => void }) {
   );
 }
 
-function Hero({ repoCount }: { repoCount: number }) {
+function Hero({ repoCount, siteCount }: { repoCount: number; siteCount: number }) {
   const txt = useTypewriter(ROLES);
   const caseCount = projects.filter((p) => p.caseStudy).length;
   const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
   return (
     <section id="top" className="relative isolate overflow-hidden pb-24 pt-36 md:pt-40 lg:min-h-[92vh] lg:pb-28">
-      <div
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 70% at 78% 30%, rgba(229,9,20,.30), transparent 60%), radial-gradient(ellipse 50% 50% at 8% 100%, rgba(178,7,16,.18), transparent 70%), var(--bg)",
-        }}
-      />
+      <div className="absolute inset-0 -z-10" style={{ background: "var(--bg)" }} />
+      <div className="nx-aurora" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+      </div>
       <div className="absolute inset-x-0 bottom-0 -z-10 h-44" style={{ background: "linear-gradient(to bottom, transparent, var(--bg))" }} />
 
       <div className={`${WRAP} ${PAD} grid items-center gap-12 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:gap-16`}>
@@ -825,7 +1022,7 @@ function Hero({ repoCount }: { repoCount: number }) {
           </p>
           <h1 className="nx-display nx-rise text-[4.6rem] leading-[.88] sm:text-[7.5rem] lg:text-[9.5rem]" style={d(100)}>
             <span className="sr-only">Sachin Bodare: software developer, farmer, frontend developer, backend developer and traveller.</span>
-            <span aria-hidden="true">
+            <span aria-hidden="true" className="nx-grad-text">
               Sachin
               <br />
               Bodare
@@ -834,11 +1031,10 @@ function Hero({ repoCount }: { repoCount: number }) {
           <div className="nx-rise mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm sm:text-base" style={d(220)}>
             <span className="font-bold text-[var(--green)]">Open to work</span>
             <span className="nx-mute">Pune, India</span>
-            {["3+ yrs", `${liveSites.length} live sites`, `${repoCount} repos`, ...(caseCount > 0 ? [`${caseCount} case studies`] : [])].map((m) => (
-              <span key={m} className="rounded-[3px] border border-[var(--line)] px-1.5 text-xs">
-                {m}
-              </span>
-            ))}
+            <span className="rounded-[3px] border border-[var(--line)] px-1.5 text-xs">3+ yrs</span>
+            <Metric to={siteCount} label="live sites" />
+            <Metric to={repoCount} label="repos" />
+            {caseCount > 0 && <Metric to={caseCount} label="case studies" />}
           </div>
           <p className="nx-rise mt-5 max-w-xl text-base leading-relaxed sm:text-lg" style={d(320)}>
             I build web apps that hold up in production — travel platforms, HRMS, commerce and SaaS — with React, Next.js, Node and MongoDB. Off screen I'm in the fields or on the road.
@@ -896,9 +1092,10 @@ function ShotImg({ site }: { site: Site }) {
   );
 }
 
-function LiveSites({ dark }: { dark: boolean }) {
+function LiveSites({ dark, sites }: { dark: boolean; sites: Site[] }) {
   const [cat, setCat] = useState("All");
-  const list = liveSites.filter((s) => cat === "All" || s.cat === cat);
+  const siteCats = useMemo(() => ["All", ...Array.from(new Set(sites.map((s) => s.cat)))], [sites]);
+  const list = sites.filter((s) => cat === "All" || s.cat === cat);
   return (
     <Row
       id="live"
@@ -1041,7 +1238,19 @@ function CaseStudies({ dark }: { dark: boolean }) {
   );
 }
 
-function Repos({ repos, status }: { repos: Repo[]; status: RepoStatus }) {
+function Repos({
+  repos,
+  status,
+  updatedAt,
+  refreshing,
+  onRefresh,
+}: {
+  repos: Repo[];
+  status: RepoStatus;
+  updatedAt: number | null;
+  refreshing: boolean;
+  onRefresh: () => void;
+}) {
   const [query, setQuery] = useState("");
   const [lang, setLang] = useState("All");
   const [hideForks, setHideForks] = useState(false);
@@ -1074,7 +1283,7 @@ function Repos({ repos, status }: { repos: Repo[]; status: RepoStatus }) {
   }, [query, lang, hideForks, sort]);
 
   const shown = filtered.slice(0, visible);
-  const isNew = (iso: string) => Date.now() - +new Date(iso) < 90 * 864e5;
+  const isNew = (r: Repo) => Date.now() - +new Date(r.created_at ?? r.pushed_at) < 30 * 864e5;
 
   return (
     <section id="repos" className={`${WRAP} ${PAD} scroll-mt-20 pt-14 sm:pt-20`}>
@@ -1083,13 +1292,20 @@ function Repos({ repos, status }: { repos: Repo[]; status: RepoStatus }) {
           <h2 className="text-2xl font-extrabold sm:text-3xl">All titles: every GitHub repo</h2>
           <p className="nx-mute mt-2 max-w-2xl text-sm">
             {status === "fallback"
-              ? "GitHub's API didn't respond (it rate-limits visitors), so this is a saved snapshot. Open GitHub for the complete list."
-              : `${repos.length} public repositories, pulled live and sorted by recent activity.`}
+              ? "GitHub didn't respond, so this is a saved snapshot. Open GitHub for the full list."
+              : status === "cached"
+                ? `Showing the list from ${ago(updatedAt)}. GitHub is busy, so this will refresh automatically.`
+                : `${repos.length} public repositories, synced ${ago(updatedAt)}. New repos appear here on their own.`}
           </p>
         </div>
-        <a href={GITHUB} target="_blank" rel="noreferrer" className="nx-chip inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold">
-          <Github className="h-4 w-4" /> View profile on GitHub
-        </a>
+        <div className="flex flex-wrap gap-2">
+          <button onClick={onRefresh} disabled={refreshing} className="nx-chip inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold">
+            <RefreshCw className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`} /> {refreshing ? "Syncing" : "Sync now"}
+          </button>
+          <a href={GITHUB} target="_blank" rel="noreferrer" className="nx-chip inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold">
+            <Github className="h-4 w-4" /> View profile on GitHub
+          </a>
+        </div>
       </div>
 
       <div className="mt-6 space-y-4">
@@ -1138,14 +1354,15 @@ function Repos({ repos, status }: { repos: Repo[]; status: RepoStatus }) {
           {shown.map((r, i) => (
             <Reveal key={r.id} delay={(i % 4) * 60} className="h-full">
               <Tilt max={4} scale={1.02} className="h-full">
-                <article className="nx-card relative flex h-full flex-col p-5">
+                <article className="nx-card relative flex h-full flex-col overflow-hidden p-5">
+                  <span className="absolute inset-x-0 top-0 h-[3px]" style={{ background: LANG_COLORS[r.language ?? ""] ?? "var(--raised)" }} />
                   <div className="flex items-center justify-between gap-2">
                     <span className="inline-flex items-center gap-2 text-xs font-bold">
                       {r.fork ? <GitFork className="nx-red h-4 w-4" /> : <Github className="nx-red h-4 w-4" />}
                       {r.fork ? "Fork" : "Original"}
                     </span>
                     <span className="flex items-center gap-2">
-                      {!r.fork && isNew(r.pushed_at) && <span className="rounded-[3px] bg-[var(--red)] px-1.5 py-0.5 text-[10px] font-bold text-white">New</span>}
+                      {!r.fork && isNew(r) && <span className="nx-new rounded-[3px] px-1.5 py-0.5 text-[10px] font-bold text-white">New</span>}
                       {r.homepage && /^https?:\/\//.test(r.homepage) && (
                         <a href={r.homepage} target="_blank" rel="noreferrer" aria-label={`Open ${r.name} live site`} className="nx-tag nx-mute relative z-10 grid h-7 w-7 place-items-center hover:text-[var(--ink)]">
                           <ExternalLink className="h-3.5 w-3.5" />
@@ -1199,12 +1416,13 @@ function Genres({ dark }: { dark: boolean }) {
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {skillGroups.map((g, i) => {
           const Icon = g.icon;
+          const accent = ACCENTS[i % ACCENTS.length];
           return (
             <Reveal key={g.title} delay={(i % 3) * 70} className="h-full">
               <Tilt max={5} scale={1.02} className="h-full">
-                <div className="nx-card h-full p-5">
+                <div className="nx-card h-full p-5" style={{ borderTop: `3px solid ${accent}` }}>
                   <div className="mb-4 flex items-center gap-3">
-                    <span className="grid h-9 w-9 place-items-center rounded bg-[var(--red)] text-white">
+                    <span className="grid h-9 w-9 place-items-center rounded text-white" style={{ background: accent }}>
                       <Icon className="h-5 w-5" />
                     </span>
                     <h3 className="font-extrabold">{g.title}</h3>
@@ -1313,10 +1531,11 @@ function Education() {
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
         {education.map((e, i) => {
           const Icon = e.icon;
+          const accent = ACCENTS[(i + 2) % ACCENTS.length];
           return (
             <Reveal key={e.title} delay={i * 80} className="h-full">
-              <div className="nx-card h-full p-5">
-                <span className="mb-4 grid h-10 w-10 place-items-center rounded bg-[var(--red)] text-white">
+              <div className="nx-card h-full p-5" style={{ borderTop: `3px solid ${accent}` }}>
+                <span className="mb-4 grid h-10 w-10 place-items-center rounded text-white" style={{ background: accent }}>
                   <Icon className="h-5 w-5" />
                 </span>
                 <h3 className="font-extrabold">{e.title}</h3>
